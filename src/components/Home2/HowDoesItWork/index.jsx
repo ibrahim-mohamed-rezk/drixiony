@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 // import 'node_modules/react-modal-video/css/modal-video.css';
-import ModalVideo from 'react-modal-video';
+// import ModalVideo from 'react-modal-video';
 
 function index() {
   const [isOpen, setOpen] = useState(false);
@@ -95,13 +95,13 @@ function index() {
         </div>
       </div>
       <React.Fragment>
-          <ModalVideo
+          {/* <ModalVideo
             channel="youtube"
             youtube={{ mute: 0, autoplay: 0 }}
             isOpen={isOpen}
             videoId="L61p2uyiMSo"
             onClose={() => setOpen(false)} 
-          />
+          /> */}
         </React.Fragment>
     </div>
   )
