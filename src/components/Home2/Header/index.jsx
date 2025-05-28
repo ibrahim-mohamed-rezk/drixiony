@@ -73,10 +73,10 @@ function index() {
       <div className={`sidebar-menu ${state.isSidebarOpen ? "show-menu" : ""}`}>
         <div className="mobile-logo-area d-flex justify-content-between align-items-center">
           <div className="mobile-logo-wrap">
-            <Link legacyBehavior href="/">
-              <a>
+            <Link  href="/">
+              <span>
                 <img alt="image" src="assets/img/sb-logo.svg" />
-              </a>
+              </span>
             </Link>
           </div>
           <div onClick={toggleSidebar} className="menu-button menu-close-btn">
@@ -85,15 +85,15 @@ function index() {
         </div>
         <ul className="menu-list">
           <li className={`${currentRoute === "/" ? "active" : ""}`}>
-            <Link legacyBehavior href="/">
-              <a>Home</a>
+            <Link  href="/">
+              <span>الرئيسية</span>
             </Link>
           </li>
 
           <li className="position-inherit">
-            <a href="#" className="drop-down">
-              NEW CAR
-            </a>
+            <span href="#" className="drop-down">
+              سيارات جديدة
+            </span>
             <i
               onClick={() => toggleMenu("new-car")}
               className={`bi bi-${
@@ -107,223 +107,223 @@ function index() {
             >
               <ul className="menu-row">
                 <li className="menu-single-item">
-                  <h6>Browse by Brand</h6>
+                  <h6>تصفح حسب الماركة</h6>
                   <ul>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Merchedes Benz (10){" "}
+                      <Link  href="/single-brand-category">
+                        <span>
+                          مرسيدس بنز (10){" "}
                           <img
                             src="assets/img/menu-icon/merchedes.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Volkswagen (10){" "}
+                      <Link  href="/single-brand-category">
+                        <span>
+                          فولكس فاجن (10){" "}
                           <img
                             src="assets/img/menu-icon/volkswagen.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Ferrari (10){" "}
+                      <Link  href="/single-brand-category">
+                        <span>
+                          فيراري (10){" "}
                           <img src="assets/img/menu-icon/ferrari.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Mazda (10){" "}
+                      <Link  href="/single-brand-category">
+                        <span>
+                          مازدا (10){" "}
                           <img src="assets/img/menu-icon/mazda.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Mitsubishi (10){" "}
+                      <Link  href="/single-brand-category">
+                        <span>
+                          ميتسوبيشي (10){" "}
                           <img
                             src="assets/img/menu-icon/mitsubishi.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Lamborghini (10){" "}
+                      <Link  href="/single-brand-category">
+                        <span>
+                          لامبورغيني (10){" "}
                           <img
                             src="assets/img/menu-icon/lamborghini.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Tesla (10){" "}
+                      <Link  href="/single-brand-category">
+                        <span>
+                          تسلا (10){" "}
                           <img src="assets/img/menu-icon/tesla.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Toyota (10){" "}
+                      <Link  href="/single-brand-category">
+                        <span>
+                          تويوتا (10){" "}
                           <img src="assets/img/menu-icon/toyota.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <div className="explore-more-btn">
-                      <Link legacyBehavior href="/brand-category">
-                        <a>
-                          Explore More <i className="bi bi-arrow-right" />
-                        </a>
+                      <Link  href="/brand-category">
+                        <span>
+                          استكشف المزيد <i className="bi bi-arrow-right" />
+                        </span>
                       </Link>
                     </div>
                   </ul>
                 </li>
                 <li className="menu-single-item">
-                  <h6>Popular Models</h6>
+                  <h6>الموديلات الشائعة</h6>
                   <ul>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Toyota Camry</a>
+                      <Link  href="/single-brand-category">
+                        <span>تويوتا كامري</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Ford Mustang</a>
+                      <Link  href="/single-brand-category">
+                        <span>فورد موستانج</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Volkswagen Golf</a>
+                      <Link  href="/single-brand-category">
+                        <span>فولكس فاجن جولف</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Mercedes C-Class</a>
+                      <Link  href="/single-brand-category">
+                        <span>مرسيدس سي كلاس</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Audi A4</a>
+                      <Link  href="/single-brand-category">
+                        <span>أودي A4</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Jeep Wrangler</a>
+                      <Link  href="/single-brand-category">
+                        <span>جيب رانجلر</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Mazda CX-5</a>
+                      <Link  href="/single-brand-category">
+                        <span>مازدا CX-5</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Chevrolet Corvette</a>
+                      <Link  href="/single-brand-category">
+                        <span>شيفروليه كورفيت</span>
                       </Link>
                     </li>
                     <div className="explore-more-btn">
-                      <Link legacyBehavior href="/brand-category">
-                        <a>
-                          Explore More <i className="bi bi-arrow-right" />
-                        </a>
+                      <Link  href="/brand-category">
+                        <span>
+                          استكشف المزيد <i className="bi bi-arrow-right" />
+                        </span>
                       </Link>
                     </div>
                   </ul>
                 </li>
                 <li className="menu-single-item">
-                  <h6>Popular Cities </h6>
+                  <h6>المدن الشائعة</h6>
                   <ul>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Panama City (10)
+                      <Link  href="/single-brand-category">
+                        <span>
+                          مدينة بنما (10)
                           <img src="assets/img/menu-icon/panama.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Sydne City (10)
+                      <Link  href="/single-brand-category">
+                        <span>
+                          مدينة سيدني (10)
                           <img src="assets/img/menu-icon/sydne.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Melbourne City (10)
+                      <Link  href="/single-brand-category">
+                        <span>
+                          مدينة ملبورن (10)
                           <img
                             src="assets/img/menu-icon/melbourne.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          New Delhi (10)
+                      <Link  href="/single-brand-category">
+                        <span>
+                          نيودلهي (10)
                           <img src="assets/img/menu-icon/delhi.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          New York (10)
+                      <Link  href="/single-brand-category">
+                        <span>
+                          نيويورك (10)
                           <img src="assets/img/menu-icon/newYork.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          Menchester City (10)
+                      <Link  href="/single-brand-category">
+                        <span>
+                          مدينة مانشستر (10)
                           <img
                             src="assets/img/menu-icon/menchester.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          City of Greece (10)
+                      <Link  href="/single-brand-category">
+                        <span>
+                          مدينة اليونان (10)
                           <img src="assets/img/menu-icon/greece.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
-                          City of Abu-dabi (10)
+                      <Link  href="/single-brand-category">
+                        <span>
+                          مدينة أبوظبي (10)
                           <img src="assets/img/menu-icon/abudabi.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <div className="explore-more-btn">
-                      <Link legacyBehavior href="/brand-category">
-                        <a>
-                          Explore More <i className="bi bi-arrow-right" />
-                        </a>
+                      <Link  href="/brand-category">
+                        <span>
+                          استكشف المزيد <i className="bi bi-arrow-right" />
+                        </span>
                       </Link>
                     </div>
                   </ul>
@@ -333,9 +333,9 @@ function index() {
           </li>
 
           <li className="position-inherit">
-            <a href="#" className="drop-down">
-              USED CAR
-            </a>
+            <span href="#" className="drop-down">
+              سيارات مستعملة
+            </span>
             <i
               onClick={() => toggleMenu("use-car")}
               className={`bi bi-${
@@ -352,86 +352,86 @@ function index() {
                   <h6>Browse by Brand</h6>
                   <ul>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Merchedes Benz (10){" "}
                           <img
                             src="assets/img/menu-icon/merchedes.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Volkswagen (10){" "}
                           <img
                             src="assets/img/menu-icon/volkswagen.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Ferrari (10){" "}
                           <img src="assets/img/menu-icon/ferrari.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Mazda (10){" "}
                           <img src="assets/img/menu-icon/mazda.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Mitsubishi (10){" "}
                           <img
                             src="assets/img/menu-icon/mitsubishi.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Lamborghini (10){" "}
                           <img
                             src="assets/img/menu-icon/lamborghini.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Tesla (10){" "}
                           <img src="assets/img/menu-icon/tesla.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Toyota (10){" "}
                           <img src="assets/img/menu-icon/toyota.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <div className="explore-more-btn">
-                      <Link legacyBehavior href="/brand-category">
-                        <a>
+                      <Link  href="/brand-category">
+                        <span>
                           Explore More <i className="bi bi-arrow-right" />
-                        </a>
+                        </span>
                       </Link>
                     </div>
                   </ul>
@@ -440,50 +440,50 @@ function index() {
                   <h6>Popular Models</h6>
                   <ul>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Toyota Camry</a>
+                      <Link  href="/single-brand-category">
+                        <span>Toyota Camry</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Ford Mustang</a>
+                      <Link  href="/single-brand-category">
+                        <span>Ford Mustang</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Volkswagen Golf</a>
+                      <Link  href="/single-brand-category">
+                        <span>Volkswagen Golf</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Mercedes C-Class</a>
+                      <Link  href="/single-brand-category">
+                        <span>Mercedes C-Class</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Audi A4</a>
+                      <Link  href="/single-brand-category">
+                        <span>Audi A4</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Jeep Wrangler</a>
+                      <Link  href="/single-brand-category">
+                        <span>Jeep Wrangler</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Mazda CX-5</a>
+                      <Link  href="/single-brand-category">
+                        <span>Mazda CX-5</span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>Chevrolet Corvette</a>
+                      <Link  href="/single-brand-category">
+                        <span>Chevrolet Corvette</span>
                       </Link>
                     </li>
                     <div className="explore-more-btn">
-                      <Link legacyBehavior href="/brand-category">
-                        <a>
+                      <Link  href="/brand-category">
+                        <span>
                           Explore More <i className="bi bi-arrow-right" />
-                        </a>
+                        </span>
                       </Link>
                     </div>
                   </ul>
@@ -492,80 +492,80 @@ function index() {
                   <h6>Popular Cities </h6>
                   <ul>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Panama City (10)
                           <img src="assets/img/menu-icon/panama.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Sydne City (10)
                           <img src="assets/img/menu-icon/sydne.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Melbourne City (10)
                           <img
                             src="assets/img/menu-icon/melbourne.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           New Delhi (10)
                           <img src="assets/img/menu-icon/delhi.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           New York (10)
                           <img src="assets/img/menu-icon/newYork.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           Menchester City (10)
                           <img
                             src="assets/img/menu-icon/menchester.svg"
                             alt=""
                           />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           City of Greece (10)
                           <img src="assets/img/menu-icon/greece.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <li>
-                      <Link legacyBehavior href="/single-brand-category">
-                        <a>
+                      <Link  href="/single-brand-category">
+                        <span>
                           City of Abu-dabi (10)
                           <img src="assets/img/menu-icon/abudabi.svg" alt="" />
-                        </a>
+                        </span>
                       </Link>
                     </li>
                     <div className="explore-more-btn">
-                      <Link legacyBehavior href="/brand-category">
-                        <a>
+                      <Link  href="/brand-category">
+                        <span>
                           Explore More <i className="bi bi-arrow-right" />
-                        </a>
+                        </span>
                       </Link>
                     </div>
                   </ul>
@@ -575,9 +575,9 @@ function index() {
           </li>
 
           <li className="menu-item-has-children">
-            <a href="#" className="drop-down">
+            <span href="#" className="drop-down">
               Pages
-            </a>
+            </span>
             <i
               onClick={() => toggleMenu("pages")}
               className={`bi bi-${
@@ -590,22 +590,22 @@ function index() {
               }`}
             >
               <li>
-                <Link legacyBehavior href="/about">
-                  <a>About Us</a>
+                <Link  href="/about">
+                  <span>About Us</span>
                 </Link>
               </li>
               <li>
-                <Link legacyBehavior href="/brand-category">
-                  <a>Brand Category</a>
+                <Link  href="/brand-category">
+                  <span>Brand Category</span>
                 </Link>
               </li>
               <li>
-                <Link legacyBehavior href="/single-brand-category">
-                  <a>Single Brand Category</a>
+                <Link  href="/single-brand-category">
+                  <span>Single Brand Category</span>
                 </Link>
               </li>
               <li>
-                <a href="#">Car Listing System</a>
+                <span href="#">Car Listing System</span>
                 <i className="d-lg-flex d-none bi bi-chevron-right dropdown-icon" />
                 <i
                   onClick={() => toggleSubMenu("submenu1")}
@@ -619,44 +619,44 @@ function index() {
                   }`}
                 >
                   <li>
-                    <Link legacyBehavior href="/car-listing-left-sidebar">
-                      <a>Car Listing Left Sidebar</a>
+                    <Link  href="/car-listing-left-sidebar">
+                      <span>Car Listing Left Sidebar</span>
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior href="/car-listing-right-sidebar">
-                      <a>Car Listing Right Sidebar</a>
+                    <Link  href="/car-listing-right-sidebar">
+                      <span>Car Listing Right Sidebar</span>
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior href="/car-listing-no-sidebar">
-                      <a>Car Listing No Sidebar</a>
+                    <Link  href="/car-listing-no-sidebar">
+                      <span>Car Listing No Sidebar</span>
                     </Link>
                   </li>
                 </ul>
               </li>
               <li>
-                <Link legacyBehavior href="/special-offer">
-                  <a>Special Offer</a>
+                <Link  href="/special-offer">
+                  <span>Special Offer</span>
                 </Link>
               </li>
               <li>
-                <Link legacyBehavior href="/car-deatils">
-                  <a>Car Details </a>
+                <Link  href="/car-deatils">
+                  <span>Car Details </span>
                 </Link>
               </li>
               <li>
-                <Link legacyBehavior href="/car-auction-details">
-                  <a>Car Auction Details</a>
+                <Link  href="/car-auction-details">
+                  <span>Car Auction Details</span>
                 </Link>
               </li>
               <li>
-                <Link legacyBehavior href="/compare">
-                  <a> Compare Car</a>
+                <Link  href="/compare">
+                  <span> Compare Car</span>
                 </Link>
               </li>
               <li>
-                <a href="#">Shop</a>
+                <span href="#">Shop</span>
                 <i className="d-lg-flex d-none bi bi-chevron-right dropdown-icon" />
                 <i
                   onClick={() => toggleSubMenu("shop")}
@@ -670,24 +670,24 @@ function index() {
                   }`}
                 >
                   <li>
-                    <Link legacyBehavior href="/shop">
-                      <a>Shop</a>
+                    <Link  href="/shop">
+                      <span>Shop</span>
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior href="/product-details">
-                      <a>Product Details</a>
+                    <Link  href="/product-details">
+                      <span>Product Details</span>
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior href="/checkout">
-                      <a>Checkout</a>
+                    <Link  href="/checkout">
+                      <span>Checkout</span>
                     </Link>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="#">Blog</a>
+                <span href="#">Blog</span>
                 <i className="d-lg-flex d-none bi bi-chevron-right dropdown-icon" />
                 <i
                   onClick={() => toggleSubMenu("blog")}
@@ -701,43 +701,43 @@ function index() {
                   }`}
                 >
                   <li>
-                    <Link legacyBehavior href="/blog-standard">
-                      <a>Blog Standard</a>
+                    <Link  href="/blog-standard">
+                      <span>Blog Standard</span>
                     </Link>
                   </li>
                   <li>
-                    <Link legacyBehavior href="/blog-details">
-                      <a>Blog Details</a>
+                    <Link  href="/blog-details">
+                      <span>Blog Details</span>
                     </Link>
                   </li>
                 </ul>
               </li>
               <li>
-                <Link legacyBehavior href="/faq">
-                  <a>FAQ's</a>
+                <Link  href="/faq">
+                  <span>FAQ's</span>
                 </Link>
               </li>
               <li>
-                <Link legacyBehavior href="/error">
-                  <a>Error</a>
+                <Link  href="/error">
+                  <span>Error</span>
                 </Link>
               </li>
               <li>
-                <Link legacyBehavior href="/customer-review">
-                  <a>Customer Review </a>
+                <Link  href="/customer-review">
+                  <span>Customer Review </span>
                 </Link>
               </li>
               <li>
-                <Link legacyBehavior href="/return-enchange">
-                  <a>Return &amp; Exchange</a>
+                <Link  href="/return-enchange">
+                  <span>Return &amp; Exchange</span>
                 </Link>
               </li>
             </ul>
           </li>
 
           <li>
-            <Link legacyBehavior href="/contact">
-              <a className="drop-down">CONTACT US</a>
+            <Link  href="/contact">
+              <span className="drop-down">CONTACT US</span>
             </Link>
           </li>
         </ul>
@@ -758,7 +758,7 @@ function index() {
             </svg>{" "}
             SELL WITH US
           </button>
-          <a href="#">
+          <span href="#">
             <svg
               width={16}
               height={16}
@@ -768,7 +768,7 @@ function index() {
               <path d="M7.00012 2.40453L6.37273 1.75966C4.90006 0.245917 2.19972 0.76829 1.22495 2.67141C0.767306 3.56653 0.664053 4.8589 1.4997 6.50827C2.30473 8.09639 3.97953 9.99864 7.00012 12.0706C10.0207 9.99864 11.6946 8.09639 12.5005 6.50827C13.3362 4.85803 13.2338 3.56653 12.7753 2.67141C11.8005 0.76829 9.10019 0.245042 7.62752 1.75879L7.00012 2.40453ZM7.00012 13.125C-6.41666 4.25953 2.86912 -2.65995 6.84612 1.00016C6.89862 1.04829 6.95024 1.09816 7.00012 1.14979C7.04949 1.09821 7.10087 1.04859 7.15413 1.00104C11.1302 -2.6617 20.4169 4.25865 7.00012 13.125Z" />
             </svg>
             SAVE
-          </a>
+          </span>
           <button
             type="button"
             className="primary-btn3"
@@ -808,7 +808,7 @@ function index() {
           <div className="content">
             <span>To More Inquiry</span>
             <h6>
-              <a href="tel:+990737621432">+990-737 621 432</a>
+              <span href="tel:+990737621432">+990-737 621 432</span>
             </h6>
           </div>
         </div>
@@ -817,21 +817,25 @@ function index() {
         <div className="top-bar style-2">
           <div className="company-logo">
             <Link href="/">
-              <img style={{
-                width:"170px"
-              }} src="assets/img/home2/icon/home2-logo.svg" alt="logo" />
+              <img
+                style={{
+                  width: "170px",
+                }}
+                src="assets/img/home2/icon/home2-logo.svg"
+                alt="logo"
+              />
             </Link>
           </div>
           <div className="top-bar-items">
             <ul>
               <li>
-                <a href="#">Newly Listed Car</a>
+                <span href="#">Newly Listed Car</span>
               </li>
               <li>
-                <a href="#">Lowest Mileage</a>
+                <span href="#">Lowest Mileage</span>
               </li>
               <li>
-                <a href="#">Offer</a>
+                <span href="#">Offer</span>
               </li>
             </ul>
           </div>
@@ -862,7 +866,7 @@ function index() {
               <div className="content">
                 <span>To More Inquiry</span>
                 <h6>
-                  <a href="tel:+990737621432">+990-737 621 432</a>
+                  <span href="tel:+990737621432">+990-737 621 432</span>
                 </h6>
               </div>
             </div>
@@ -876,14 +880,14 @@ function index() {
           }
         >
           <div className="header-logo d-lg-none d-flex">
-            <Link legacyBehavior href="/">
-              <a>
+            <Link  href="/">
+              <span>
                 <img
                   alt="image"
                   className="img-fluid"
                   src="assets/img/home2/icon/home2-logo.svg"
                 />
-              </a>
+              </span>
             </Link>
           </div>
           <div
@@ -905,21 +909,21 @@ function index() {
           <div className="main-menu">
             <div className="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
               <div className="mobile-logo-wrap">
-                <Link legacyBehavior href="/">
-                  <a>
+                <Link  href="/">
+                  <span>
                     <img
                       alt="image"
                       src="assets/img/home2/icon/home2-logo.svg"
                     />
-                  </a>
+                  </span>
                 </Link>
               </div>
             </div>
             <ul className="menu-list">
               <li className="position-inherit">
-                <a href="#" className="drop-down">
+                <span href="#" className="drop-down">
                   NEW CAR
-                </a>
+                </span>
                 <i className={`bi bi-plus dropdown-icon`} />
                 <div className="mega-menu">
                   <ul className="menu-row">
@@ -927,250 +931,250 @@ function index() {
                       <h6>Browse by Brand</h6>
                       <ul>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Merchedes Benz (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مرسيدس بنز (10){" "}
                               <img
                                 src="assets/img/menu-icon/merchedes.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Volkswagen (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              فولكس فاجن (10){" "}
                               <img
                                 src="assets/img/menu-icon/volkswagen.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Ferrari (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              فيراري (10){" "}
                               <img
                                 src="assets/img/menu-icon/ferrari.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Mazda (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مازدا (10){" "}
                               <img
                                 src="assets/img/menu-icon/mazda.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Mitsubishi (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              ميتسوبيشي (10){" "}
                               <img
                                 src="assets/img/menu-icon/mitsubishi.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Lamborghini (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              لامبورغيني (10){" "}
                               <img
                                 src="assets/img/menu-icon/lamborghini.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Tesla (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              تسلا (10){" "}
                               <img
                                 src="assets/img/menu-icon/tesla.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Toyota (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              تويوتا (10){" "}
                               <img
                                 src="assets/img/menu-icon/toyota.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li className="explore-more-btn">
-                          <Link legacyBehavior href="/brand-category">
-                            <a>
-                              Explore More <i className="bi bi-arrow-right" />
-                            </a>
+                          <Link  href="/brand-category">
+                            <span>
+                              استكشف المزيد <i className="bi bi-arrow-right" />
+                            </span>
                           </Link>
                         </li>
                       </ul>
                     </li>
                     <li className="menu-single-item">
-                      <h6>Popular Models</h6>
+                      <h6>الموديلات الشائعة</h6>
                       <ul>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Toyota Camry</a>
+                          <Link  href="/single-brand-category">
+                            <span>تويوتا كامري</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Ford Mustang</a>
+                          <Link  href="/single-brand-category">
+                            <span>فورد موستانج</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Volkswagen Golf</a>
+                          <Link  href="/single-brand-category">
+                            <span>فولكس فاجن جولف</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Mercedes C-Class</a>
+                          <Link  href="/single-brand-category">
+                            <span>مرسيدس سي كلاس</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Audi A4</a>
+                          <Link  href="/single-brand-category">
+                            <span>أودي A4</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Jeep Wrangler</a>
+                          <Link  href="/single-brand-category">
+                            <span>جيب رانجلر</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Mazda CX-5</a>
+                          <Link  href="/single-brand-category">
+                            <span>مازدا CX-5</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Chevrolet Corvette</a>
+                          <Link  href="/single-brand-category">
+                            <span>شيفروليه كورفيت</span>
                           </Link>
                         </li>
                         <li className="explore-more-btn">
-                          <Link legacyBehavior href="/brand-category">
-                            <a>
-                              Explore More <i className="bi bi-arrow-right" />
-                            </a>
+                          <Link  href="/brand-category">
+                            <span>
+                              استكشف المزيد <i className="bi bi-arrow-right" />
+                            </span>
                           </Link>
                         </li>
                       </ul>
                     </li>
                     <li className="menu-single-item">
-                      <h6>Popular Cities </h6>
+                      <h6>المدن الشائعة</h6>
                       <ul>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Panama City (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة بنما (10)
                               <img
                                 src="assets/img/menu-icon/panama.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Sydne City (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة سيدني (10)
                               <img
                                 src="assets/img/menu-icon/sydne.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Melbourne City (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة ملبورن (10)
                               <img
                                 src="assets/img/menu-icon/melbourne.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              New Delhi (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              نيودلهي (10)
                               <img
                                 src="assets/img/menu-icon/delhi.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              New York (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              نيويورك (10)
                               <img
                                 src="assets/img/menu-icon/newYork.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Menchester City (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة مانشستر (10)
                               <img
                                 src="assets/img/menu-icon/menchester.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              City of Greece (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة اليونان (10)
                               <img
                                 src="assets/img/menu-icon/greece.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              City of Abu-dabi (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة أبوظبي (10)
                               <img
                                 src="assets/img/menu-icon/abudabi.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li className="explore-more-btn">
-                          <Link legacyBehavior href="/brand-category">
-                            <a>
-                              Explore More <i className="bi bi-arrow-right" />
-                            </a>
+                          <Link  href="/brand-category">
+                            <span>
+                              استكشف المزيد <i className="bi bi-arrow-right" />
+                            </span>
                           </Link>
                         </li>
                       </ul>
@@ -1179,9 +1183,9 @@ function index() {
                 </div>
               </li>
               <li className="position-inherit">
-                <a href="#" className="drop-down">
+                <span href="#" className="drop-down">
                   USED CAR
-                </a>
+                </span>
                 <i className="bi bi-plus dropdown-icon d-lg-none d-block" />
                 <div className="mega-menu">
                   <ul className="menu-row">
@@ -1189,248 +1193,248 @@ function index() {
                       <h6>Browse by Brand</h6>
                       <ul>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Merchedes Benz (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مرسيدس بنز (10){" "}
                               <img
                                 src="assets/img/menu-icon/merchedes.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Volkswagen (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              فولكس فاجن (10){" "}
                               <img
                                 src="assets/img/menu-icon/volkswagen.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Ferrari (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              فيراري (10){" "}
                               <img
                                 src="assets/img/menu-icon/ferrari.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Mazda (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مازدا (10){" "}
                               <img
                                 src="assets/img/menu-icon/mazda.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Mitsubishi (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              ميتسوبيشي (10){" "}
                               <img
                                 src="assets/img/menu-icon/mitsubishi.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Lamborghini (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              لامبورغيني (10){" "}
                               <img
                                 src="assets/img/menu-icon/lamborghini.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Tesla (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              تسلا (10){" "}
                               <img
                                 src="assets/img/menu-icon/tesla.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Toyota (10){" "}
+                          <Link  href="/single-brand-category">
+                            <span>
+                              تويوتا (10){" "}
                               <img
                                 src="assets/img/menu-icon/toyota.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li className="explore-more-btn">
-                          <Link legacyBehavior href="/brand-category">
-                            <a>
-                              Explore More <i className="bi bi-arrow-right" />
-                            </a>
+                          <Link  href="/brand-category">
+                            <span>
+                              استكشف المزيد <i className="bi bi-arrow-right" />
+                            </span>
                           </Link>
                         </li>
                       </ul>
                     </li>
                     <li className="menu-single-item">
-                      <h6>Popular Models</h6>
+                      <h6>الموديلات الشائعة</h6>
                       <ul>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Toyota Camry</a>
+                          <Link  href="/single-brand-category">
+                            <span>تويوتا كامري</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Ford Mustang</a>
+                          <Link  href="/single-brand-category">
+                            <span>فورد موستانج</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Volkswagen Golf</a>
+                          <Link  href="/single-brand-category">
+                            <span>فولكس فاجن جولف</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Mercedes C-Class</a>
+                          <Link  href="/single-brand-category">
+                            <span>مرسيدس سي كلاس</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Audi A4</a>
+                          <Link  href="/single-brand-category">
+                            <span>أودي A4</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Jeep Wrangler</a>
+                          <Link  href="/single-brand-category">
+                            <span>جيب رانجلر</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Mazda CX-5</a>
+                          <Link  href="/single-brand-category">
+                            <span>مازدا CX-5</span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>Chevrolet Corvette</a>
+                          <Link  href="/single-brand-category">
+                            <span>شيفروليه كورفيت</span>
                           </Link>
                         </li>
                         <li className="explore-more-btn">
-                          <a href="brand-category">
-                            Explore More <i className="bi bi-arrow-right" />
-                          </a>
+                          <span href="brand-category">
+                            استكشف المزيد <i className="bi bi-arrow-right" />
+                          </span>
                         </li>
                       </ul>
                     </li>
                     <li className="menu-single-item">
-                      <h6>Popular Cities </h6>
+                      <h6>المدن الشائعة</h6>
                       <ul>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Panama City (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة بنما (10)
                               <img
                                 src="assets/img/menu-icon/panama.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Sydne City (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة سيدني (10)
                               <img
                                 src="assets/img/menu-icon/sydne.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Melbourne City (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة ملبورن (10)
                               <img
                                 src="assets/img/menu-icon/melbourne.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              New Delhi (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              نيودلهي (10)
                               <img
                                 src="assets/img/menu-icon/delhi.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              New York (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              نيويورك (10)
                               <img
                                 src="assets/img/menu-icon/newYork.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              Menchester City (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة مانشستر (10)
                               <img
                                 src="assets/img/menu-icon/menchester.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              City of Greece (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة اليونان (10)
                               <img
                                 src="assets/img/menu-icon/greece.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li>
-                          <Link legacyBehavior href="/single-brand-category">
-                            <a>
-                              City of Abu-dabi (10)
+                          <Link  href="/single-brand-category">
+                            <span>
+                              مدينة أبوظبي (10)
                               <img
                                 src="assets/img/menu-icon/abudabi.svg"
                                 alt=""
                               />
-                            </a>
+                            </span>
                           </Link>
                         </li>
                         <li className="explore-more-btn">
-                          <Link legacyBehavior href="/brand-category">
-                            <a>
-                              Explore More <i className="bi bi-arrow-right" />
-                            </a>
+                          <Link  href="/brand-category">
+                            <span>
+                              استكشف المزيد <i className="bi bi-arrow-right" />
+                            </span>
                           </Link>
                         </li>
                       </ul>
@@ -1439,8 +1443,8 @@ function index() {
                 </div>
               </li>
               <li>
-                <Link legacyBehavior href="/contact">
-                  <a className="drop-down">CONTACT US</a>
+                <Link href="/contact">
+                  <span className="drop-down">اتصل بنا</span>
                 </Link>
               </li>
             </ul>
@@ -1451,7 +1455,7 @@ function index() {
             <div className="header-right">
               <ul>
                 <li>
-                  <a href="#">
+                  <span href="#">
                     <svg
                       width={16}
                       height={16}
@@ -1461,7 +1465,7 @@ function index() {
                       <path d="M7.00012 2.40453L6.37273 1.75966C4.90006 0.245917 2.19972 0.76829 1.22495 2.67141C0.767306 3.56653 0.664053 4.8589 1.4997 6.50827C2.30473 8.09639 3.97953 9.99864 7.00012 12.0706C10.0207 9.99864 11.6946 8.09639 12.5005 6.50827C13.3362 4.85803 13.2338 3.56653 12.7753 2.67141C11.8005 0.76829 9.10019 0.245042 7.62752 1.75879L7.00012 2.40453ZM7.00012 13.125C-6.41666 4.25953 2.86912 -2.65995 6.84612 1.00016C6.89862 1.04829 6.95024 1.09816 7.00012 1.14979C7.04949 1.09821 7.10087 1.04859 7.15413 1.00104C11.1302 -2.6617 20.4169 4.25865 7.00012 13.125Z" />
                     </svg>
                     SAVE
-                  </a>
+                  </span>
                 </li>
                 <li>
                   <button
