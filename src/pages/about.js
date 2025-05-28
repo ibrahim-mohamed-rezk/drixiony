@@ -1,13 +1,10 @@
 import React, { useMemo, useState } from "react";
-import Marquee from "react-fast-marquee";
 import SwiperCore, { Autoplay, EffectFade, Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
 import Lightbox from "yet-another-react-lightbox";
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import "yet-another-react-lightbox/styles.css";
-import 'node_modules/react-modal-video/css/modal-video.css';
-import ModalVideo from 'react-modal-video';
 SwiperCore.use([Pagination, Autoplay, EffectFade, Navigation]);
 import MainLayout from '../layout/MainLayout'
 
@@ -543,13 +540,13 @@ function About() {
           </div>
 
           <React.Fragment>
-            <ModalVideo
+            {/* <ModalVideo
               channel="youtube"
               youtube={{ mute: 0, autoplay: 0 }}
               isOpen={isOpen}
               videoId="L61p2uyiMSo"
               onClose={() => setOpen(false)} 
-            />
+            /> */}
           </React.Fragment>
         </div>
 
