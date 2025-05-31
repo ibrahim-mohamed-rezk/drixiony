@@ -737,7 +737,7 @@ function index() {
 
           <li>
             <Link  href="/contact">
-              <span className="drop-down">CONTACT US</span>
+              <span className="drop-down">اتصل بنا</span>
             </Link>
           </li>
         </ul>
@@ -829,7 +829,7 @@ function index() {
           <div className="top-bar-items">
             <ul>
               <li>
-                <span href="#">Newly Listed Car</span>
+                <span href="#">سيارة مدرجة حديثاً</span>
               </li>
               <li>
                 <span href="#">Lowest Mileage</span>
