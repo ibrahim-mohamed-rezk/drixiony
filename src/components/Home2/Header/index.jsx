@@ -1,7 +1,7 @@
-import React, { useEffect, useReducer, useRef } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import CardMenu from "./CardMenu";
+import useAuthData from "@/src/libs/hooks/useAuthData";
 // import CardMenu from "../Header/CardMenu";
 const initialState = {
   activeMenu: "",
@@ -45,6 +45,16 @@ function reducer(state, action) {
 function index() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const headerRef = useRef(null);
+  const { user, isLoggedIn } = useAuthData();
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const userIconRef = useRef(null);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    setShowUserDropdown(false);
+  };
+
   const handleScroll = () => {
     const { scrollY } = window;
     dispatch({ type: "setScrollY", payload: scrollY });
@@ -60,20 +70,36 @@ function index() {
     dispatch({ type: "TOGGLE_MENU", menu });
   };
 
-  const toggleSubMenu = (subMenu) => {
-    dispatch({ type: "TOGGLE_SUB_MENU", subMenu });
-  };
   const toggleSidebar = () => {
     dispatch({ type: "TOGGLE_MENU", menu: "" });
     dispatch({ type: "TOGGLE_SUB_MENU", subMenu: "" });
     dispatch({ type: "TOGGLE_SIDEBAR" });
   };
+
+  const navTabs = [
+    {
+      name: "الرئيسية",
+      icon: "bi bi-house",
+      href: "/",
+    },
+    {
+      name: "السيارات",
+      icon: "bi bi-bag",
+      href: "/cars",
+    },
+    {
+      name: "اتصل بنا",
+      icon: "bi bi-bag",
+      href: "/contact",
+    },
+  ];
+
   return (
     <>
       <div className={`sidebar-menu ${state.isSidebarOpen ? "show-menu" : ""}`}>
         <div className="mobile-logo-area d-flex justify-content-between align-items-center">
           <div className="mobile-logo-wrap">
-            <Link  href="/">
+            <Link href="/">
               <span>
                 <img alt="image" src="assets/img/sb-logo.svg" />
               </span>
@@ -84,662 +110,13 @@ function index() {
           </div>
         </div>
         <ul className="menu-list">
-          <li className={`${currentRoute === "/" ? "active" : ""}`}>
-            <Link  href="/">
-              <span>الرئيسية</span>
-            </Link>
-          </li>
-
-          <li className="position-inherit">
-            <span href="#" className="drop-down">
-              سيارات جديدة
-            </span>
-            <i
-              onClick={() => toggleMenu("new-car")}
-              className={`bi bi-${
-                state.activeMenu === "new-car" ? "dash" : "plus"
-              } dropdown-icon`}
-            />
-            <div
-              className={`mega-menu ${
-                state.activeMenu === "new-car" ? "d-block" : ""
-              }`}
-            >
-              <ul className="menu-row">
-                <li className="menu-single-item">
-                  <h6>تصفح حسب الماركة</h6>
-                  <ul>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          مرسيدس بنز (10){" "}
-                          <img
-                            src="assets/img/menu-icon/merchedes.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          فولكس فاجن (10){" "}
-                          <img
-                            src="assets/img/menu-icon/volkswagen.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          فيراري (10){" "}
-                          <img src="assets/img/menu-icon/ferrari.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          مازدا (10){" "}
-                          <img src="assets/img/menu-icon/mazda.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          ميتسوبيشي (10){" "}
-                          <img
-                            src="assets/img/menu-icon/mitsubishi.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          لامبورغيني (10){" "}
-                          <img
-                            src="assets/img/menu-icon/lamborghini.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          تسلا (10){" "}
-                          <img src="assets/img/menu-icon/tesla.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          تويوتا (10){" "}
-                          <img src="assets/img/menu-icon/toyota.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <div className="explore-more-btn">
-                      <Link  href="/brand-category">
-                        <span>
-                          استكشف المزيد <i className="bi bi-arrow-right" />
-                        </span>
-                      </Link>
-                    </div>
-                  </ul>
-                </li>
-                <li className="menu-single-item">
-                  <h6>الموديلات الشائعة</h6>
-                  <ul>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>تويوتا كامري</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>فورد موستانج</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>فولكس فاجن جولف</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>مرسيدس سي كلاس</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>أودي A4</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>جيب رانجلر</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>مازدا CX-5</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>شيفروليه كورفيت</span>
-                      </Link>
-                    </li>
-                    <div className="explore-more-btn">
-                      <Link  href="/brand-category">
-                        <span>
-                          استكشف المزيد <i className="bi bi-arrow-right" />
-                        </span>
-                      </Link>
-                    </div>
-                  </ul>
-                </li>
-                <li className="menu-single-item">
-                  <h6>المدن الشائعة</h6>
-                  <ul>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          مدينة بنما (10)
-                          <img src="assets/img/menu-icon/panama.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          مدينة سيدني (10)
-                          <img src="assets/img/menu-icon/sydne.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          مدينة ملبورن (10)
-                          <img
-                            src="assets/img/menu-icon/melbourne.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          نيودلهي (10)
-                          <img src="assets/img/menu-icon/delhi.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          نيويورك (10)
-                          <img src="assets/img/menu-icon/newYork.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          مدينة مانشستر (10)
-                          <img
-                            src="assets/img/menu-icon/menchester.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          مدينة اليونان (10)
-                          <img src="assets/img/menu-icon/greece.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          مدينة أبوظبي (10)
-                          <img src="assets/img/menu-icon/abudabi.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <div className="explore-more-btn">
-                      <Link  href="/brand-category">
-                        <span>
-                          استكشف المزيد <i className="bi bi-arrow-right" />
-                        </span>
-                      </Link>
-                    </div>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </li>
-
-          <li className="position-inherit">
-            <span href="#" className="drop-down">
-              سيارات مستعملة
-            </span>
-            <i
-              onClick={() => toggleMenu("use-car")}
-              className={`bi bi-${
-                state.activeMenu === "use-car" ? "dash" : "plus"
-              } dropdown-icon`}
-            />
-            <div
-              className={`mega-menu ${
-                state.activeMenu === "use-car" ? "d-block" : ""
-              }`}
-            >
-              <ul className="menu-row">
-                <li className="menu-single-item">
-                  <h6>Browse by Brand</h6>
-                  <ul>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Merchedes Benz (10){" "}
-                          <img
-                            src="assets/img/menu-icon/merchedes.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Volkswagen (10){" "}
-                          <img
-                            src="assets/img/menu-icon/volkswagen.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Ferrari (10){" "}
-                          <img src="assets/img/menu-icon/ferrari.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Mazda (10){" "}
-                          <img src="assets/img/menu-icon/mazda.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Mitsubishi (10){" "}
-                          <img
-                            src="assets/img/menu-icon/mitsubishi.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Lamborghini (10){" "}
-                          <img
-                            src="assets/img/menu-icon/lamborghini.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Tesla (10){" "}
-                          <img src="assets/img/menu-icon/tesla.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Toyota (10){" "}
-                          <img src="assets/img/menu-icon/toyota.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <div className="explore-more-btn">
-                      <Link  href="/brand-category">
-                        <span>
-                          Explore More <i className="bi bi-arrow-right" />
-                        </span>
-                      </Link>
-                    </div>
-                  </ul>
-                </li>
-                <li className="menu-single-item">
-                  <h6>Popular Models</h6>
-                  <ul>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>Toyota Camry</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>Ford Mustang</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>Volkswagen Golf</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>Mercedes C-Class</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>Audi A4</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>Jeep Wrangler</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>Mazda CX-5</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>Chevrolet Corvette</span>
-                      </Link>
-                    </li>
-                    <div className="explore-more-btn">
-                      <Link  href="/brand-category">
-                        <span>
-                          Explore More <i className="bi bi-arrow-right" />
-                        </span>
-                      </Link>
-                    </div>
-                  </ul>
-                </li>
-                <li className="menu-single-item">
-                  <h6>Popular Cities </h6>
-                  <ul>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Panama City (10)
-                          <img src="assets/img/menu-icon/panama.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Sydne City (10)
-                          <img src="assets/img/menu-icon/sydne.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Melbourne City (10)
-                          <img
-                            src="assets/img/menu-icon/melbourne.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          New Delhi (10)
-                          <img src="assets/img/menu-icon/delhi.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          New York (10)
-                          <img src="assets/img/menu-icon/newYork.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          Menchester City (10)
-                          <img
-                            src="assets/img/menu-icon/menchester.svg"
-                            alt=""
-                          />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          City of Greece (10)
-                          <img src="assets/img/menu-icon/greece.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link  href="/single-brand-category">
-                        <span>
-                          City of Abu-dabi (10)
-                          <img src="assets/img/menu-icon/abudabi.svg" alt="" />
-                        </span>
-                      </Link>
-                    </li>
-                    <div className="explore-more-btn">
-                      <Link  href="/brand-category">
-                        <span>
-                          Explore More <i className="bi bi-arrow-right" />
-                        </span>
-                      </Link>
-                    </div>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </li>
-
-          <li className="menu-item-has-children">
-            <span href="#" className="drop-down">
-              Pages
-            </span>
-            <i
-              onClick={() => toggleMenu("pages")}
-              className={`bi bi-${
-                state.activeMenu === "pages" ? "dash" : "plus"
-              } dropdown-icon`}
-            />
-            <ul
-              className={`sub-menu ${
-                state.activeMenu === "pages" ? "d-block" : ""
-              }`}
-            >
-              <li>
-                <Link  href="/about">
-                  <span>About Us</span>
-                </Link>
-              </li>
-              <li>
-                <Link  href="/brand-category">
-                  <span>Brand Category</span>
-                </Link>
-              </li>
-              <li>
-                <Link  href="/single-brand-category">
-                  <span>Single Brand Category</span>
-                </Link>
-              </li>
-              <li>
-                <span href="#">Car Listing System</span>
-                <i className="d-lg-flex d-none bi bi-chevron-right dropdown-icon" />
-                <i
-                  onClick={() => toggleSubMenu("submenu1")}
-                  className={`d-lg-none d-flex bi bi-${
-                    state.activeSubMenu === "submenu1" ? "dash" : "plus"
-                  } dropdown-icon `}
-                />
-                <ul
-                  className={`sub-menu ${
-                    state.activeSubMenu === "submenu1" ? "d-block" : ""
-                  }`}
-                >
-                  <li>
-                    <Link  href="/car-listing-left-sidebar">
-                      <span>Car Listing Left Sidebar</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link  href="/car-listing-right-sidebar">
-                      <span>Car Listing Right Sidebar</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link  href="/car-listing-no-sidebar">
-                      <span>Car Listing No Sidebar</span>
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <Link  href="/special-offer">
-                  <span>Special Offer</span>
-                </Link>
-              </li>
-              <li>
-                <Link  href="/car-deatils">
-                  <span>Car Details </span>
-                </Link>
-              </li>
-              <li>
-                <Link  href="/car-auction-details">
-                  <span>Car Auction Details</span>
-                </Link>
-              </li>
-              <li>
-                <Link  href="/compare">
-                  <span> Compare Car</span>
-                </Link>
-              </li>
-              <li>
-                <span href="#">Shop</span>
-                <i className="d-lg-flex d-none bi bi-chevron-right dropdown-icon" />
-                <i
-                  onClick={() => toggleSubMenu("shop")}
-                  className={`d-lg-none d-flex bi bi-${
-                    state.activeSubMenu === "shop" ? "dash" : "plus"
-                  } dropdown-icon `}
-                />
-                <ul
-                  className={`sub-menu ${
-                    state.activeSubMenu === "shop" ? "d-block" : ""
-                  }`}
-                >
-                  <li>
-                    <Link  href="/shop">
-                      <span>Shop</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link  href="/product-details">
-                      <span>Product Details</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link  href="/checkout">
-                      <span>Checkout</span>
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <span href="#">Blog</span>
-                <i className="d-lg-flex d-none bi bi-chevron-right dropdown-icon" />
-                <i
-                  onClick={() => toggleSubMenu("blog")}
-                  className={`d-lg-none d-flex bi bi-${
-                    state.activeSubMenu === "blog" ? "dash" : "plus"
-                  } dropdown-icon `}
-                />
-                <ul
-                  className={`sub-menu ${
-                    state.activeSubMenu === "blog" ? "d-block" : ""
-                  }`}
-                >
-                  <li>
-                    <Link  href="/blog-standard">
-                      <span>Blog Standard</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link  href="/blog-details">
-                      <span>Blog Details</span>
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <Link  href="/faq">
-                  <span>FAQ's</span>
-                </Link>
-              </li>
-              <li>
-                <Link  href="/error">
-                  <span>Error</span>
-                </Link>
-              </li>
-              <li>
-                <Link  href="/customer-review">
-                  <span>Customer Review </span>
-                </Link>
-              </li>
-              <li>
-                <Link  href="/return-enchange">
-                  <span>Return &amp; Exchange</span>
-                </Link>
-              </li>
-            </ul>
-          </li>
-
-          <li>
-            <Link  href="/contact">
-              <span className="drop-down">اتصل بنا</span>
-            </Link>
-          </li>
+          {navTabs.map((tab, index) => (
+            <li className={`${currentRoute === "/" ? "active" : ""}`}>
+              <Link key={index} href={tab.href}>
+                {tab.name}
+              </Link>
+            </li>
+          ))}
         </ul>
         <div className="topbar-right">
           <button
@@ -773,7 +150,7 @@ function index() {
             type="button"
             className="primary-btn3"
             data-bs-toggle="modal"
-            data-bs-target="#signUpModal01"
+            data-bs-target="#logInModal01"
           >
             <svg
               width={16}
@@ -787,7 +164,7 @@ function index() {
                 d="M14.4311 12.759C15.417 11.4291 16 9.78265 16 8C16 3.58169 12.4182 0 8 0C3.58169 0 0 3.58169 0 8C0 12.4182 3.58169 16 8 16C10.3181 16 12.4058 15.0141 13.867 13.4387C14.0673 13.2226 14.2556 12.9957 14.4311 12.759ZM13.9875 12C14.7533 10.8559 15.1999 9.48009 15.1999 8C15.1999 4.02355 11.9764 0.799983 7.99991 0.799983C4.02355 0.799983 0.799983 4.02355 0.799983 8C0.799983 9.48017 1.24658 10.8559 2.01245 12C2.97866 10.5566 4.45301 9.48194 6.17961 9.03214C5.34594 8.45444 4.79998 7.49102 4.79998 6.39995C4.79998 4.63266 6.23271 3.19993 8 3.19993C9.76729 3.19993 11.2 4.63266 11.2 6.39995C11.2 7.49093 10.654 8.45444 9.82039 9.03206C11.5469 9.48194 13.0213 10.5565 13.9875 12ZM13.4722 12.6793C12.3495 10.8331 10.3188 9.59997 8.00008 9.59997C5.68126 9.59997 3.65049 10.8331 2.52776 12.6794C3.84829 14.2222 5.80992 15.2 8 15.2C10.1901 15.2 12.1517 14.2222 13.4722 12.6793ZM8 8.79998C9.32551 8.79998 10.4 7.72554 10.4 6.39995C10.4 5.07444 9.32559 3.99992 8 3.99992C6.6744 3.99992 5.59997 5.07452 5.59997 6.40003C5.59997 7.72554 6.67449 8.79998 8 8.79998Z"
               />
             </svg>
-            SIGN UP
+            تسجيل الدخول
           </button>
         </div>
         <div className="hotline-area d-flex">
@@ -813,6 +190,7 @@ function index() {
           </div>
         </div>
       </div>
+
       <div className="topbar-header">
         <div className="top-bar style-2">
           <div className="company-logo">
@@ -825,29 +203,6 @@ function index() {
                 alt="logo"
               />
             </Link>
-          </div>
-          <div className="top-bar-items">
-            <ul>
-              <li>
-                <span href="#">سيارة مدرجة حديثاً</span>
-              </li>
-              <li>
-                <span href="#">Lowest Mileage</span>
-              </li>
-              <li>
-                <span href="#">Offer</span>
-              </li>
-            </ul>
-          </div>
-          <div className="search-area">
-            <form>
-              <div className="form-inner">
-                <input type="text" placeholder="Search for cars" />
-                <button type="submit">
-                  <i className="bi bi-search" />
-                </button>
-              </div>
-            </form>
           </div>
           <div className="topbar-right">
             <div className="hotline-area d-xl-flex d-none">
@@ -880,7 +235,7 @@ function index() {
           }
         >
           <div className="header-logo d-lg-none d-flex">
-            <Link  href="/">
+            <Link href="/">
               <span>
                 <img
                   alt="image"
@@ -909,7 +264,7 @@ function index() {
           <div className="main-menu">
             <div className="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">
               <div className="mobile-logo-wrap">
-                <Link  href="/">
+                <Link href="/">
                   <span>
                     <img
                       alt="image"
@@ -920,18 +275,23 @@ function index() {
               </div>
             </div>
             <ul className="menu-list">
-              <li className="position-inherit">
+              {/* <li className="position-inherit">
                 <span href="#" className="drop-down">
                   NEW CAR
                 </span>
                 <i className={`bi bi-plus dropdown-icon`} />
                 <div className="mega-menu">
-                  <ul className="menu-row">
+                  <ul
+                    className="menu-row"
+                    style={{
+                      width: "fit-content ! important",
+                    }}
+                  >
                     <li className="menu-single-item">
                       <h6>Browse by Brand</h6>
                       <ul>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>
                               مرسيدس بنز (10){" "}
                               <img
@@ -942,7 +302,7 @@ function index() {
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>
                               فولكس فاجن (10){" "}
                               <img
@@ -953,7 +313,7 @@ function index() {
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>
                               فيراري (10){" "}
                               <img
@@ -964,7 +324,7 @@ function index() {
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>
                               مازدا (10){" "}
                               <img
@@ -975,7 +335,7 @@ function index() {
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>
                               ميتسوبيشي (10){" "}
                               <img
@@ -986,7 +346,7 @@ function index() {
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>
                               لامبورغيني (10){" "}
                               <img
@@ -997,7 +357,7 @@ function index() {
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>
                               تسلا (10){" "}
                               <img
@@ -1008,7 +368,7 @@ function index() {
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>
                               تويوتا (10){" "}
                               <img
@@ -1019,7 +379,7 @@ function index() {
                           </Link>
                         </li>
                         <li className="explore-more-btn">
-                          <Link  href="/brand-category">
+                          <Link href="/brand-category">
                             <span>
                               استكشف المزيد <i className="bi bi-arrow-right" />
                             </span>
@@ -1031,147 +391,47 @@ function index() {
                       <h6>الموديلات الشائعة</h6>
                       <ul>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>تويوتا كامري</span>
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>فورد موستانج</span>
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>فولكس فاجن جولف</span>
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>مرسيدس سي كلاس</span>
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>أودي A4</span>
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>جيب رانجلر</span>
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>مازدا CX-5</span>
                           </Link>
                         </li>
                         <li>
-                          <Link  href="/single-brand-category">
+                          <Link href="/single-brand-category">
                             <span>شيفروليه كورفيت</span>
                           </Link>
                         </li>
                         <li className="explore-more-btn">
-                          <Link  href="/brand-category">
-                            <span>
-                              استكشف المزيد <i className="bi bi-arrow-right" />
-                            </span>
-                          </Link>
-                        </li>
-                      </ul>
-                    </li>
-                    <li className="menu-single-item">
-                      <h6>المدن الشائعة</h6>
-                      <ul>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة بنما (10)
-                              <img
-                                src="assets/img/menu-icon/panama.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة سيدني (10)
-                              <img
-                                src="assets/img/menu-icon/sydne.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة ملبورن (10)
-                              <img
-                                src="assets/img/menu-icon/melbourne.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              نيودلهي (10)
-                              <img
-                                src="assets/img/menu-icon/delhi.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              نيويورك (10)
-                              <img
-                                src="assets/img/menu-icon/newYork.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة مانشستر (10)
-                              <img
-                                src="assets/img/menu-icon/menchester.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة اليونان (10)
-                              <img
-                                src="assets/img/menu-icon/greece.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة أبوظبي (10)
-                              <img
-                                src="assets/img/menu-icon/abudabi.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li className="explore-more-btn">
-                          <Link  href="/brand-category">
+                          <Link href="/brand-category">
                             <span>
                               استكشف المزيد <i className="bi bi-arrow-right" />
                             </span>
@@ -1181,314 +441,85 @@ function index() {
                     </li>
                   </ul>
                 </div>
-              </li>
-              <li className="position-inherit">
-                <span href="#" className="drop-down">
-                  USED CAR
-                </span>
-                <i className="bi bi-plus dropdown-icon d-lg-none d-block" />
-                <div className="mega-menu">
-                  <ul className="menu-row">
-                    <li className="menu-single-item">
-                      <h6>Browse by Brand</h6>
-                      <ul>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مرسيدس بنز (10){" "}
-                              <img
-                                src="assets/img/menu-icon/merchedes.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              فولكس فاجن (10){" "}
-                              <img
-                                src="assets/img/menu-icon/volkswagen.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              فيراري (10){" "}
-                              <img
-                                src="assets/img/menu-icon/ferrari.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مازدا (10){" "}
-                              <img
-                                src="assets/img/menu-icon/mazda.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              ميتسوبيشي (10){" "}
-                              <img
-                                src="assets/img/menu-icon/mitsubishi.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              لامبورغيني (10){" "}
-                              <img
-                                src="assets/img/menu-icon/lamborghini.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              تسلا (10){" "}
-                              <img
-                                src="assets/img/menu-icon/tesla.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              تويوتا (10){" "}
-                              <img
-                                src="assets/img/menu-icon/toyota.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li className="explore-more-btn">
-                          <Link  href="/brand-category">
-                            <span>
-                              استكشف المزيد <i className="bi bi-arrow-right" />
-                            </span>
-                          </Link>
-                        </li>
-                      </ul>
-                    </li>
-                    <li className="menu-single-item">
-                      <h6>الموديلات الشائعة</h6>
-                      <ul>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>تويوتا كامري</span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>فورد موستانج</span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>فولكس فاجن جولف</span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>مرسيدس سي كلاس</span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>أودي A4</span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>جيب رانجلر</span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>مازدا CX-5</span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>شيفروليه كورفيت</span>
-                          </Link>
-                        </li>
-                        <li className="explore-more-btn">
-                          <span href="brand-category">
-                            استكشف المزيد <i className="bi bi-arrow-right" />
-                          </span>
-                        </li>
-                      </ul>
-                    </li>
-                    <li className="menu-single-item">
-                      <h6>المدن الشائعة</h6>
-                      <ul>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة بنما (10)
-                              <img
-                                src="assets/img/menu-icon/panama.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة سيدني (10)
-                              <img
-                                src="assets/img/menu-icon/sydne.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة ملبورن (10)
-                              <img
-                                src="assets/img/menu-icon/melbourne.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              نيودلهي (10)
-                              <img
-                                src="assets/img/menu-icon/delhi.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              نيويورك (10)
-                              <img
-                                src="assets/img/menu-icon/newYork.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة مانشستر (10)
-                              <img
-                                src="assets/img/menu-icon/menchester.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة اليونان (10)
-                              <img
-                                src="assets/img/menu-icon/greece.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li>
-                          <Link  href="/single-brand-category">
-                            <span>
-                              مدينة أبوظبي (10)
-                              <img
-                                src="assets/img/menu-icon/abudabi.svg"
-                                alt=""
-                              />
-                            </span>
-                          </Link>
-                        </li>
-                        <li className="explore-more-btn">
-                          <Link  href="/brand-category">
-                            <span>
-                              استكشف المزيد <i className="bi bi-arrow-right" />
-                            </span>
-                          </Link>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li>
-                <Link href="/contact">
-                  <span className="drop-down">اتصل بنا</span>
-                </Link>
-              </li>
+              </li> */}
+              {navTabs.map((tab, index) => (
+                <li>
+                  <Link key={index} href={tab.href}>
+                    {tab.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="nav-right d-flex jsutify-content-end align-items-center">
             {/* Button trigger modal */}
-            <CardMenu />
+            {/* <CardMenu /> */}
             <div className="header-right">
               <ul>
-                <li>
-                  <span href="#">
-                    <svg
-                      width={16}
-                      height={16}
-                      viewBox="0 0 14 14"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M7.00012 2.40453L6.37273 1.75966C4.90006 0.245917 2.19972 0.76829 1.22495 2.67141C0.767306 3.56653 0.664053 4.8589 1.4997 6.50827C2.30473 8.09639 3.97953 9.99864 7.00012 12.0706C10.0207 9.99864 11.6946 8.09639 12.5005 6.50827C13.3362 4.85803 13.2338 3.56653 12.7753 2.67141C11.8005 0.76829 9.10019 0.245042 7.62752 1.75879L7.00012 2.40453ZM7.00012 13.125C-6.41666 4.25953 2.86912 -2.65995 6.84612 1.00016C6.89862 1.04829 6.95024 1.09816 7.00012 1.14979C7.04949 1.09821 7.10087 1.04859 7.15413 1.00104C11.1302 -2.6617 20.4169 4.25865 7.00012 13.125Z" />
-                    </svg>
-                    SAVE
-                  </span>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    className="primary-btn1"
-                    data-bs-toggle="modal"
-                    data-bs-target="#signUpModal01"
+                {isLoggedIn ? (
+                  <li
+                    className="user-dropdown-wrapper"
+                    style={{ position: "relative", listStyle: "none" }}
                   >
-                    <svg
-                      width={16}
-                      height={16}
-                      viewBox="0 0 16 16"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <div
+                      className="user-icon"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setShowUserDropdown((prev) => !prev)}
+                      ref={userIconRef}
                     >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M14.4311 12.759C15.417 11.4291 16 9.78265 16 8C16 3.58169 12.4182 0 8 0C3.58169 0 0 3.58169 0 8C0 12.4182 3.58169 16 8 16C10.3181 16 12.4058 15.0141 13.867 13.4387C14.0673 13.2226 14.2556 12.9957 14.4311 12.759ZM13.9875 12C14.7533 10.8559 15.1999 9.48009 15.1999 8C15.1999 4.02355 11.9764 0.799983 7.99991 0.799983C4.02355 0.799983 0.799983 4.02355 0.799983 8C0.799983 9.48017 1.24658 10.8559 2.01245 12C2.97866 10.5566 4.45301 9.48194 6.17961 9.03214C5.34594 8.45444 4.79998 7.49102 4.79998 6.39995C4.79998 4.63266 6.23271 3.19993 8 3.19993C9.76729 3.19993 11.2 4.63266 11.2 6.39995C11.2 7.49093 10.654 8.45444 9.82039 9.03206C11.5469 9.48194 13.0213 10.5565 13.9875 12ZM13.4722 12.6793C12.3495 10.8331 10.3188 9.59997 8.00008 9.59997C5.68126 9.59997 3.65049 10.8331 2.52776 12.6794C3.84829 14.2222 5.80992 15.2 8 15.2C10.1901 15.2 12.1517 14.2222 13.4722 12.6793ZM8 8.79998C9.32551 8.79998 10.4 7.72554 10.4 6.39995C10.4 5.07444 9.32559 3.99992 8 3.99992C6.6744 3.99992 5.59997 5.07452 5.59997 6.40003C5.59997 7.72554 6.67449 8.79998 8 8.79998Z"
-                      />
-                    </svg>
-                    SIGN UP
-                  </button>
-                </li>
+                      <img src="assets/img/user.webp" alt="userIcon" />
+                    </div>
+                    {showUserDropdown && (
+                      <div
+                        className="user-dropdown-menu"
+                        style={{
+                          position: "absolute",
+                          top: "100%",
+                          right: "-100%",
+                          background: "#ffffff84",
+                          boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                          borderRadius: 8,
+                          minWidth: 120,
+                          zIndex: 1000,
+                          padding: 8,
+                          marginTop: 8,
+                        }}
+                      >
+                        <div className="user-name">{user?.name}</div>
+                        <button
+                          className="primary-btn1"
+                          style={{ width: "100%", marginTop: 8 }}
+                          onClick={handleLogout}
+                        >
+                          تسجيل الخروج
+                        </button>
+                      </div>
+                    )}
+                  </li>
+                ) : (
+                  <li>
+                    <button
+                      type="button"
+                      className="primary-btn1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#logInModal01"
+                    >
+                      <svg
+                        width={16}
+                        height={16}
+                        viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M14.4311 12.759C15.417 11.4291 16 9.78265 16 8C16 3.58169 12.4182 0 8 0C3.58169 0 0 3.58169 0 8C0 12.4182 3.58169 16 8 16C10.3181 16 12.4058 15.0141 13.867 13.4387C14.0673 13.2226 14.2556 12.9957 14.4311 12.759ZM13.9875 12C14.7533 10.8559 15.1999 9.48009 15.1999 8C15.1999 4.02355 11.9764 0.799983 7.99991 0.799983C4.02355 0.799983 0.799983 4.02355 0.799983 8C0.799983 9.48017 1.24658 10.8559 2.01245 12C2.97866 10.5566 4.45301 9.48194 6.17961 9.03214C5.34594 8.45444 4.79998 7.49102 4.79998 6.39995C4.79998 4.63266 6.23271 3.19993 8 3.19993C9.76729 3.19993 11.2 4.63266 11.2 6.39995C11.2 7.49093 10.654 8.45444 9.82039 9.03206C11.5469 9.48194 13.0213 10.5565 13.9875 12ZM13.4722 12.6793C12.3495 10.8331 10.3188 9.59997 8.00008 9.59997C5.68126 9.59997 3.65049 10.8331 2.52776 12.6794C3.84829 14.2222 5.80992 15.2 8 15.2C10.1901 15.2 12.1517 14.2222 13.4722 12.6793ZM8 8.79998C9.32551 8.79998 10.4 7.72554 10.4 6.39995C10.4 5.07444 9.32559 3.99992 8 3.99992C6.6744 3.99992 5.59997 5.07452 5.59997 6.40003C5.59997 7.72554 6.67449 8.79998 8 8.79998Z"
+                        />
+                      </svg>
+                      تسجيل الدخول
+                    </button>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

@@ -8,7 +8,7 @@ function Breadcrumb() {
     const lastPathSegment  = currentPathData?.path.split("/").pop()
     
   return (
-    <div className="inner-page-banner">
+    <div className="inner-page-banner pt-100">
       <div className="banner-wrapper">
         <div className="container-fluid">
           <ul className="breadcrumb-list">
