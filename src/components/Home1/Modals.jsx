@@ -1,11 +1,13 @@
-import { postData } from "@/src/libs/axios/server";
+import { getData, postData } from "@/src/libs/axios/server";
 import SelectComponent from "@/src/utils/SelectComponent";
+import SelectComponentWithKeyAndValue from "@/src/utils/SelectComponentWithKeyAndValute";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 function Modals() {
   const city = ["Sydne City, Australia", " Dhaka, Bangladesh", "Tokyo, Japan"];
+  const token = localStorage.getItem("token");
   const brand = ["Mercedes Benz", "Volkswagen", "Mitsubishi", "Tesla"];
   const body = ["Hatchback", "Covertible", "Coupe", "Truck"];
   const fuel = ["Petrol + Gas", "Petrol", "Gas"];
@@ -26,11 +28,21 @@ function Modals() {
   const [logintStatus, setLogintStatus] = useState("form");
   const [otp, setOtp] = useState(null);
 
+  // add ad states
+  const [bodyType, setBodyType] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [models, setModels] = useState([]);
+  const [addAdFormData, setAddAdFormData] = useState({});
+  const [imagePreviewUrl, setImagePreviewUrl] = useState("");
+  const [selectedImageFile, setSelectedImageFile] = useState(null);
+
+  // /////////////////////////////////////////////////
+  // auth functions
+
   const handlCreateAccount = async (e) => {
     e.preventDefault();
     try {
       postData("register", createAccountFormData, {
-        Authorization: `Bearer token`,
         "Content-Type": "multipart/form-data",
       });
       toast.success("تم ارسال كود التفعيل الي الواتساب");
@@ -66,14 +78,13 @@ function Modals() {
       } else {
         toast.error("An unexpected error occurred");
       }
-        console.log(error);
+      console.log(error);
     }
   };
 
   const verifyOtp = async () => {
     try {
       const response = await postData("verify-code", otp, {
-        Authorization: `Bearer token`,
         "Content-Type": "multipart/form-data",
       });
 
@@ -92,6 +103,70 @@ function Modals() {
       }
     }
   };
+
+  // ////////////////////////////////////////////
+  // add ad functions
+
+  useEffect(() => {
+    return () => {
+      if (imagePreviewUrl) {
+        URL.revokeObjectURL(imagePreviewUrl);
+      }
+    };
+  }, [imagePreviewUrl]);
+
+  const feachBodyTypes = async () => {
+    try {
+      const response = await getData("add/body-types", {}, {});
+      setBodyType(response.data);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const feachModels = async () => {
+    try {
+      const response = await getData("add/models", {}, {});
+      setModels(response.data);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const feachCities = async () => {
+    try {
+      const response = await getData("add/cities", {}, {});
+      setCities(response.data);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    feachBodyTypes();
+    feachModels();
+    feachCities();
+  }, []);
+
+  const handleAddAd = async () => {
+    try {
+      await postData("add", addAdFormData, {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      });
+      toast.success("تم اضافة الاعلان بنجاح");
+      document.getElementById("closAdModal").click();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.msg || "An error occurred");
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+      throw error;
+    }
+  };
+
+  console.log(addAdFormData);
 
   return (
     <>
@@ -337,120 +412,537 @@ function Modals() {
         </div>
       </div>
 
+      {/* Sell With Us Modal */}
       <div
         className="modal signUp-modal sell-with-us fade"
         id="sellUsModal01"
         tabIndex={-1}
         aria-labelledby="sellUsModal01Label"
         aria-hidden="true"
+        dir="rtl"
       >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title" id="sellUsModal01Label">
-                Sell Your Car
+                بيع سيارتك
               </h4>
               <button
                 type="button"
+                id="closAdModal"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Close"
+                aria-label="إغلاق"
               >
                 <i className="bi bi-x" />
               </button>
             </div>
             <div className="modal-body">
-              <form>
+              <div>
                 <div className="row">
-                  <div className="col-lg-12 mb-15">
-                    <h5>Your Personal Info</h5>
-                  </div>
-                  <div className="col-md-6 mb-20">
+                  {/* Add this after the installment radio section and before the submit button */}
+                  <div className="col-12 mb-35">
                     <div className="form-inner">
-                      <label>Full Name*</label>
-                      <input type="text" placeholder="Full Name*" />
+                      <label
+                        style={{
+                          fontWeight: 600,
+                          fontSize: "1.1rem",
+                          marginBottom: 10,
+                          display: "block",
+                        }}
+                      >
+                        صورة السيارة <span style={{ color: "red" }}>*</span>
+                      </label>
+                      <div
+                        style={{
+                          position: "relative",
+                          width: "100%",
+                          minHeight: "200px",
+                          border: "2px dashed #e0e0e0",
+                          borderRadius: "12px",
+                          background: "#fafafa",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          cursor: "pointer",
+                          transition: "all 0.3s ease",
+                          overflow: "hidden",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = "#0d6efd";
+                          e.currentTarget.style.background = "#f0f7ff";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = "#e0e0e0";
+                          e.currentTarget.style.background = "#fafafa";
+                        }}
+                        onClick={() =>
+                          document.getElementById("carImage").click()
+                        }
+                      >
+                        <input
+                          type="file"
+                          id="carImage"
+                          accept="image/*"
+                          style={{ display: "none" }}
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              setSelectedImageFile(file);
+                              setAddAdFormData((prev) => ({
+                                ...prev,
+                                image: file,
+                              }));
+
+                              // Create preview URL
+                              const url = URL.createObjectURL(file);
+                              setImagePreviewUrl(url);
+                            }
+                          }}
+                        />
+
+                        {!imagePreviewUrl ? (
+                          <>
+                            <svg
+                              width="60"
+                              height="60"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="#0d6efd"
+                              strokeWidth="1.5"
+                              style={{ marginBottom: "15px", opacity: 0.6 }}
+                            >
+                              <path d="M12 15v-9m0 0l-3 3m3-3l3 3" />
+                              <path d="M2.5 13.5h3.3c.5 0 .9.4.9.9 0 1.4 1.5 2.6 3.3 2.6h4c1.8 0 3.3-1.2 3.3-2.6 0-.5.4-.9.9-.9h3.3" />
+                              <path d="M8.5 21h7c2.8 0 4.2 0 5.3-1.1 1.1-1.1 1.1-2.5 1.1-5.3v-5.2c0-2.8 0-4.2-1.1-5.3C19.7 3 18.3 3 15.5 3h-7c-2.8 0-4.2 0-5.3 1.1C2 5.2 2 6.6 2 9.4v5.2c0 2.8 0 4.2 1.1 5.3C4.2 21 5.6 21 8.5 21z" />
+                            </svg>
+                            <p
+                              style={{
+                                fontSize: "16px",
+                                color: "#666",
+                                marginBottom: "5px",
+                              }}
+                            >
+                              انقر لاختيار صورة
+                            </p>
+                            <p style={{ fontSize: "14px", color: "#999" }}>
+                              PNG, JPG, JPEG (حد أقصى 5 ميجا)
+                            </p>
+                          </>
+                        ) : (
+                          <div
+                            style={{
+                              position: "relative",
+                              width: "100%",
+                              height: "100%",
+                              padding: "10px",
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <img
+                              src={imagePreviewUrl}
+                              alt="preview"
+                              style={{
+                                width: "100%",
+                                height: "180px",
+                                objectFit: "contain",
+                                borderRadius: "8px",
+                              }}
+                            />
+                            <button
+                              type="button"
+                              style={{
+                                position: "absolute",
+                                top: "20px",
+                                right: "20px",
+                                width: "35px",
+                                height: "35px",
+                                borderRadius: "50%",
+                                background: "rgba(220, 53, 69, 0.9)",
+                                color: "white",
+                                border: "none",
+                                cursor: "pointer",
+                                fontSize: "20px",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                transition: "all 0.2s",
+                                boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+                              }}
+                              onMouseEnter={(e) => {
+                                e.target.style.transform = "scale(1.1)";
+                                e.target.style.background =
+                                  "rgba(220, 53, 69, 1)";
+                              }}
+                              onMouseLeave={(e) => {
+                                e.target.style.transform = "scale(1)";
+                                e.target.style.background =
+                                  "rgba(220, 53, 69, 0.9)";
+                              }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedImageFile(null);
+                                setImagePreviewUrl("");
+                                document.getElementById("carImage").value = "";
+                                setAddAdFormData((prev) => ({
+                                  ...prev,
+                                  image: null,
+                                }));
+                              }}
+                            >
+                              ×
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      {selectedImageFile && (
+                        <div
+                          style={{
+                            marginTop: "10px",
+                            fontSize: "14px",
+                            color: "#0d6efd",
+                            textAlign: "center",
+                          }}
+                        >
+                          {selectedImageFile.name} (
+                          {(selectedImageFile.size / 1024 / 1024).toFixed(2)}{" "}
+                          MB)
+                        </div>
+                      )}
                     </div>
                   </div>
+
                   <div className="col-md-6 mb-20">
                     <div className="form-inner">
-                      <label>Phone*</label>
-                      <input type="text" placeholder="+880- 123 234 ***" />
-                    </div>
-                  </div>
-                  <div className="col-md-6 mb-20">
-                    <div className="form-inner">
-                      <label>Email (Optional)</label>
+                      <label>اسم السيارة*</label>
                       <input
+                        onChange={(e) =>
+                          setAddAdFormData((preve) => ({
+                            ...preve,
+                            name: e.target.value,
+                          }))
+                        }
                         type="text"
-                        placeholder="Enter your email address"
+                        placeholder="ادخل اسم السيارة"
                       />
                     </div>
                   </div>
+
                   <div className="col-md-6 mb-20">
                     <div className="form-inner">
-                      <label>Location*</label>
-                      <input type="text" placeholder="Enter your address" />
+                      <label>رقم الجوال*</label>
+                      <input
+                        onChange={(e) =>
+                          setAddAdFormData((preve) => ({
+                            ...preve,
+                            phone: e.target.value,
+                          }))
+                        }
+                        type="text"
+                        placeholder="مثال: 01012345678"
+                      />
                     </div>
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col-lg-12 mb-15 mt-25">
-                    <h5>Your Car Info</h5>
+
+                  <div className="col-12 mb-20">
+                    <div className="form-inner">
+                      <label>الوصف*</label>
+                      <textarea
+                        onChange={(e) =>
+                          setAddAdFormData((preve) => ({
+                            ...preve,
+                            description: e.target.value,
+                          }))
+                        }
+                        placeholder="اكتب وصفاً موجزاً عن سيارتك"
+                      />
+                    </div>
                   </div>
+
                   <div className="col-md-6 mb-20">
                     <div className="form-inner">
-                      <label>Car Brand Name*</label>
-                      <input type="text" placeholder="Toyota" />
+                      <label>المدينة*</label>
+                      <SelectComponentWithKeyAndValue
+                        options={cities.map((city) => ({
+                          key: city.name,
+                          value: city.id,
+                        }))}
+                        placeholder="اختر المدينة"
+                        onChange={(selected) =>
+                          setAddAdFormData((prev) => ({
+                            ...prev,
+                            city_id: selected,
+                          }))
+                        }
+                        value={addAdFormData.city}
+                      />
                     </div>
                   </div>
+
                   <div className="col-md-6 mb-20">
                     <div className="form-inner">
-                      <label>Model*</label>
-                      <input type="text" placeholder="RS eTN 80" />
+                      <label>الموديل*</label>
+                      <SelectComponentWithKeyAndValue
+                        options={models.map((model) => ({
+                          key: `${model.brand} - ${model.name}`,
+                          value: model.id,
+                        }))}
+                        placeholder="اختر موديل السيارة"
+                        onChange={(selected) =>
+                          setAddAdFormData((prev) => ({
+                            ...prev,
+                            model_id: selected,
+                          }))
+                        }
+                        value={addAdFormData.city}
+                      />
                     </div>
                   </div>
+
                   <div className="col-md-6 mb-20">
                     <div className="form-inner">
-                      <label>Reg. Year*</label>
-                      <input type="text" placeholder={2022} />
+                      <label>نوع السيارة*</label>
+                      <SelectComponentWithKeyAndValue
+                        options={bodyType.map((type) => ({
+                          key: type.name,
+                          value: type.id,
+                        }))}
+                        placeholder="اختر نوع السيارة"
+                        onChange={(selected) =>
+                          setAddAdFormData((prev) => ({
+                            ...prev,
+                            body_type_id: selected,
+                          }))
+                        }
+                        value={addAdFormData.city}
+                      />
                     </div>
                   </div>
+
                   <div className="col-md-6 mb-20">
                     <div className="form-inner">
-                      <label>Mileage*</label>
-                      <input type="text" placeholder="23,456 miles" />
+                      <label>سعر البيع*</label>
+                      <input
+                        onChange={(e) =>
+                          setAddAdFormData((prev) => ({
+                            ...prev,
+                            price: e.target.value,
+                          }))
+                        }
+                        type="text"
+                        placeholder="مثال: 23,342 EGP"
+                      />
                     </div>
                   </div>
-                  <div className="col-md-6 mb-20">
-                    <div className="form-inner">
-                      <label>Fuel Type*</label>
-                      <input type="text" placeholder="Petrol" />
-                    </div>
-                  </div>
-                  <div className="col-md-6 mb-20">
-                    <div className="form-inner">
-                      <label>Selling Price*</label>
-                      <input type="text" placeholder="Ex- $23,342.000" />
-                    </div>
-                  </div>
+
+                  {/* installment radio */}
                   <div className="col-md-12 mb-35">
                     <div className="form-inner">
-                      <label>Your Car Note*</label>
-                      <textarea
-                        placeholder="Write somethings"
-                        defaultValue={""}
-                      />
+                      <label
+                        style={{
+                          fontWeight: 600,
+                          fontSize: "1.1rem",
+                          marginBottom: 10,
+                          display: "block",
+                        }}
+                      >
+                        حاله الاعلان <span style={{ color: "red" }}>*</span>
+                      </label>
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "40px",
+                          alignItems: "center",
+                          marginTop: "12px",
+                          direction: "rtl",
+                        }}
+                      >
+                        <label
+                          htmlFor="installment-yes"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            cursor: "pointer",
+                            fontWeight: 500,
+                            fontSize: "1rem",
+                            background: "#f6f6f6",
+                            padding: "10px 24px",
+                            borderRadius: "8px",
+                            border: "1.5px solid #e0e0e0",
+                            transition: "border 0.2s",
+                          }}
+                          className="installment-radio-label"
+                        >
+                          <input
+                            type="radio"
+                            id="installment-yes"
+                            name="status"
+                            value="active"
+                            onChange={(e) => {
+                              setAddAdFormData((prev) => ({
+                                ...prev,
+                                status: e.target.value,
+                              }));
+                            }}
+                            style={{
+                              accentColor: "#0d6efd",
+                              width: 18,
+                              height: 18,
+                              marginLeft: 8,
+                            }}
+                          />
+                          نشط
+                        </label>
+                        <label
+                          htmlFor="installment-no"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            cursor: "pointer",
+                            fontWeight: 500,
+                            fontSize: "1rem",
+                            background: "#f6f6f6",
+                            padding: "10px 24px",
+                            borderRadius: "8px",
+                            border: "1.5px solid #e0e0e0",
+                            transition: "border 0.2s",
+                          }}
+                          className="installment-radio-label"
+                        >
+                          <input
+                            type="radio"
+                            id="installment-no"
+                            name="status"
+                            value="inactive"
+                            onChange={(e) => {
+                              setAddAdFormData((prev) => ({
+                                ...prev,
+                                status: e.target.value,
+                              }));
+                            }}
+                            style={{
+                              accentColor: "#dc3545",
+                              width: 18,
+                              height: 18,
+                              marginLeft: 8,
+                            }}
+                          />
+                          غير نشط
+                        </label>
+                      </div>
                     </div>
                   </div>
+
+                  {/* installment radio */}
+                  <div className="col-md-12 mb-35">
+                    <div className="form-inner">
+                      <label
+                        style={{
+                          fontWeight: 600,
+                          fontSize: "1.1rem",
+                          marginBottom: 10,
+                          display: "block",
+                        }}
+                      >
+                        هل تقبل التقسيط؟ <span style={{ color: "red" }}>*</span>
+                      </label>
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "40px",
+                          alignItems: "center",
+                          marginTop: "12px",
+                          direction: "rtl",
+                        }}
+                      >
+                        <label
+                          htmlFor="installment-yes"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            cursor: "pointer",
+                            fontWeight: 500,
+                            fontSize: "1rem",
+                            background: "#f6f6f6",
+                            padding: "10px 24px",
+                            borderRadius: "8px",
+                            border: "1.5px solid #e0e0e0",
+                            transition: "border 0.2s",
+                          }}
+                          className="installment-radio-label"
+                        >
+                          <input
+                            type="radio"
+                            id="installment-yes"
+                            name="installment"
+                            value="yes"
+                            onChange={(e) => {
+                              setAddAdFormData((prev) => ({
+                                ...prev,
+                                installment: e.target.value,
+                              }));
+                            }}
+                            style={{
+                              accentColor: "#0d6efd",
+                              width: 18,
+                              height: 18,
+                              marginLeft: 8,
+                            }}
+                          />
+                          نعم
+                        </label>
+                        <label
+                          htmlFor="installment-no"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            cursor: "pointer",
+                            fontWeight: 500,
+                            fontSize: "1rem",
+                            background: "#f6f6f6",
+                            padding: "10px 24px",
+                            borderRadius: "8px",
+                            border: "1.5px solid #e0e0e0",
+                            transition: "border 0.2s",
+                          }}
+                          className="installment-radio-label"
+                        >
+                          <input
+                            type="radio"
+                            id="installment-no"
+                            name="installment"
+                            value="no"
+                            onChange={(e) => {
+                              setAddAdFormData((prev) => ({
+                                ...prev,
+                                installment: e.target.value,
+                              }));
+                            }}
+                            style={{
+                              accentColor: "#dc3545",
+                              width: 18,
+                              height: 18,
+                              marginLeft: 8,
+                            }}
+                          />
+                          لا
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* submit button */}
                   <div className="col-lg-12">
                     <div className="form-inner">
-                      <button className="primary-btn2" type="submit">
-                        Submit Now
+                      <button onClick={handleAddAd} className="primary-btn2">
+                        إرسال الآن
                       </button>
                     </div>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -629,6 +1121,7 @@ function Modals() {
           </div>
         </div>
       </div>
+
       <div
         className="modal adSearch-modal fade"
         id="bidsModal01"

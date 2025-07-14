@@ -132,19 +132,20 @@ function index({ data }) {
                             >
                               <div className="product-card2 two">
                                 <div className="product-img">
-                                  <img src={item.image} alt="img" />
+                                  <img
+                                    style={{ width: "100%", height: "220px" }}
+                                    src={item.image}
+                                    alt="img"
+                                  />
                                 </div>
                                 <div className="product-content">
-                                  <div className="company-logo">
-                                    <Link href="/single-brand-category">
-                                      <img src={item.image} alt="" />
-                                    </Link>
-                                  </div>
                                   <div className="price">
                                     <strong>{item.price}EGP</strong>
                                   </div>
                                   <h6>
-                                    <Link href="/car-deatils">{item.name}</Link>
+                                    <Link href={`/cars/${item.id}`}>
+                                      {item.name}
+                                    </Link>
                                   </h6>
                                 </div>
                               </div>
@@ -182,19 +183,15 @@ function index({ data }) {
                                 item.image || "assets/img/home2/used-car-01.png"
                               }
                               alt={item.name || "img"}
+                              style={{ width: "100%", height: "220px" }}
                             />
                           </div>
                           <div className="product-content">
-                            <div className="company-logo">
-                              <Link href="/single-brand-category">
-                                <img src={item.image} alt={item.brand} />
-                              </Link>
-                            </div>
                             <div className="price">
                               <strong>{item.price}EGP</strong>
                             </div>
                             <h6>
-                              <Link href="/car-deatils">
+                              <Link href={`/cars/${item.id}`}>
                                 {item.name || "Mercedes-Benz-2023"}
                               </Link>
                             </h6>
