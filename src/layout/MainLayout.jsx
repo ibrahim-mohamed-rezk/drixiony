@@ -9,8 +9,8 @@ function MainLayout({ children }) {
     <>
       <Modals />
       <Header />
-      <Breadcrumb />
-      {children}
+      {/* <Breadcrumb /> */}
+      <div className="pt-100">{children}</div>
       <Footer1 />
     </>
   );

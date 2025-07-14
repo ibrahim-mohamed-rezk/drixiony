@@ -199,7 +199,7 @@ function index() {
                 style={{
                   width: "170px",
                 }}
-                src="assets/img/home2/icon/home2-logo.svg"
+                src="/assets/img/home2/icon/home2-logo.svg"
                 alt="logo"
               />
             </Link>
@@ -467,7 +467,7 @@ function index() {
                       onClick={() => setShowUserDropdown((prev) => !prev)}
                       ref={userIconRef}
                     >
-                      <img src="assets/img/user.webp" alt="userIcon" />
+                      <img src="/assets/img/user.webp" alt="userIcon" />
                     </div>
                     {showUserDropdown && (
                       <div

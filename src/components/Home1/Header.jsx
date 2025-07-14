@@ -72,7 +72,7 @@ function Header() {
   return (
     <header ref={headerRef} className={state.scrollY > 10 ?"header-area style-1 sticky":"header-area style-1"}>
       <div className="header-logo d-lg-none d-flex">
-        <Link legacyBehavior href="/"><a><img alt="image" className="img-fluid" src="assets/img/logo.svg" /></a></Link>
+        <Link  href="/"><img alt="image" className="img-fluid" src="/assets/img/logo.svg" /></Link>
       </div>
       <div className={`main-menu ${state.isSidebarOpen ? "show-menu" : ""}`}>
         <div className="mobile-logo-area d-lg-none d-flex justify-content-between align-items-center">

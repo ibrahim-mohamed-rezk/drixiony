@@ -2,7 +2,13 @@ import React, { useEffect, useRef } from "react";
 import useCustomSelect from "../components/hooks/useCustomSelect";
 // import useCustomSelect from './useCustomSelect'; // Update the path based on your project structure
 
-const SelectComponent = ({ options, placeholder, open, customClass }) => {
+const SelectComponent = ({
+  options,
+  placeholder,
+  open,
+  customClass,
+  onChange,
+}) => {
   const {
     isOpen,
     selectedOption,
@@ -44,9 +50,7 @@ const SelectComponent = ({ options, placeholder, open, customClass }) => {
       onClick={toggleDropdown}
       ref={dropdownRef}
     >
-      <span className="current">
-        {selectedOption || placeholder}
-      </span>
+      <span className="current">{selectedOption || placeholder}</span>
       <ul className="list">
         {options.map((option, index) => (
           <li
@@ -57,7 +61,8 @@ const SelectComponent = ({ options, placeholder, open, customClass }) => {
             data-value={index}
             onClick={() => {
               selectOption(option);
-              openDropdown(); // Open the next dropdown
+              openDropdown();
+              onChange(option); // Open the next dropdown
             }}
           >
             {option}
