@@ -130,13 +130,12 @@ const ProfileComponent = () => {
   const [adsLoading, setAdsLoading] = useState(true);
 
   useEffect(() => {
-    // Get user data from localStorage
-    const userData = JSON.parse(localStorage.getItem("user") || "{}");
-    if (userData.data) {
-      setUser(userData.data);
-    }
+    setLoading(true);
+    setUser(JSON.parse(localStorage.getItem("user") || "{}"));
     setLoading(false);
   }, []);
+
+  console.log();
 
   useEffect(() => {
     const fetchData = async () => {
