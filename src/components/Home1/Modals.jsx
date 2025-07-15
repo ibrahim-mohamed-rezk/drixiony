@@ -166,7 +166,6 @@ function Modals() {
     }
   };
 
-  console.log(addAdFormData);
 
   return (
     <>

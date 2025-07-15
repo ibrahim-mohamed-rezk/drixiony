@@ -84,6 +84,11 @@ function index() {
       href: "/cars",
     },
     {
+      name: "المقالات",
+      icon: "bi bi-bag",
+      href: "/blogs",
+    },
+    {
       name: "اتصل بنا",
       icon: "bi bi-bag",
       href: "/contact",
@@ -327,7 +332,7 @@ function index() {
                           marginTop: 8,
                         }}
                       >
-                        <div className="user-name">{user?.name}</div>
+                        <Link href="/profile" className="user-name">{user?.name}</Link>
                         <button
                           className="primary-btn1"
                           style={{ width: "100%", marginTop: 8 }}
