@@ -17,111 +17,8 @@ import {
   Image,
 } from "lucide-react";
 import MainLayout from "../layout/MainLayout";
-// Note: Import './Profile.css' in your actual project
+import { getData } from "../libs/axios/server";
 
-// Mock getData function - replace with your actual implementation
-const getData = async (endpoint, params, headers) => {
-  // Simulate API call
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        data: {
-          brands: [
-            {
-              id: 1,
-              name: "gdfgdfg",
-              description: "<p>gfhgfhfgh</p>",
-              image:
-                "https://darkgoldenrod-weasel-493963.hostingersite.com/cars/iSclUjm6llLxe2oatAUvUFeIwBtNOgO7hZga6eqO.jpg",
-              price: "373000",
-              year: "2020",
-              km: "267000",
-              fuel: "gdfgdfg",
-              transmission: "gdfgdf",
-              color: "بيج",
-              engine_capacity: "1300",
-              engine_power: "gdfgfd",
-              engine_type: "gdfg",
-              link: "https://drixuniy.test/dashboard/adds/create",
-              status: "active",
-              installment: "no",
-              installment_price: null,
-              installment_duration: null,
-              installment_interest: null,
-              installment_down_payment: null,
-              installment_monthly_payment: null,
-              installment_total_payment: null,
-              installment_total_interest: null,
-              city_id: 4,
-              body_type_id: 5,
-              model_id: 224,
-              user_id: 1,
-              featured_score: null,
-              city: {
-                id: 4,
-                name: "الجيزة",
-                created_at: "2025-06-03T18:32:09.000000Z",
-                updated_at: "2025-06-03T18:32:09.000000Z",
-                deleted_at: null,
-              },
-              body_type: {
-                id: 5,
-                name: "SUV",
-                image: null,
-                created_at: "2025-06-03T18:31:08.000000Z",
-                updated_at: "2025-06-03T18:31:08.000000Z",
-                deleted_at: null,
-              },
-              model: {
-                id: 224,
-                brand: "مرسيدس-بنز",
-                name: "200",
-                image: null,
-                created_at: "2025-06-03T16:59:09.000000Z",
-                updated_at: "2025-06-03T16:59:09.000000Z",
-                deleted_at: null,
-              },
-              user: {
-                id: 1,
-                name: "super",
-                email: "super@admin.com",
-                phone: "fdgdf",
-                role: "admin",
-                email_verified_at: null,
-                created_at: "2025-06-03T17:03:51.000000Z",
-                updated_at: "2025-06-03T14:13:53.000000Z",
-                deleted_at: null,
-              },
-              images: [
-                {
-                  id: 1,
-                  add_id: 1,
-                  image:
-                    "https://darkgoldenrod-weasel-493963.hostingersite.com/storage/files/140341749048046.jpg",
-                  created_at: "2025-06-04 11:40:46",
-                  updated_at: "2025-06-04 11:40:46",
-                  deleted_at: null,
-                },
-                {
-                  id: 2,
-                  add_id: 1,
-                  image:
-                    "https://darkgoldenrod-weasel-493963.hostingersite.com/storage/files/195321749048046.png",
-                  created_at: "2025-06-04 11:40:46",
-                  updated_at: "2025-06-04 11:40:46",
-                  deleted_at: null,
-                },
-              ],
-              created_at: "2025-06-04 10:26:01",
-              updated_at: "2025-06-04 10:26:01",
-              deleted_at: null,
-            },
-          ],
-        },
-      });
-    }, 1000);
-  });
-};
 
 const ProfileComponent = () => {
   const [user, setUser] = useState(null);
@@ -135,7 +32,6 @@ const ProfileComponent = () => {
     setLoading(false);
   }, []);
 
-  console.log();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -147,7 +43,7 @@ const ProfileComponent = () => {
             "Content-Type": "multipart/form-data",
           }
         );
-        setUserAds(response.data.brands);
+        setUserAds(response.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -157,6 +53,7 @@ const ProfileComponent = () => {
 
     fetchData();
   }, []);
+    
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("ar-EG", {
@@ -169,6 +66,7 @@ const ProfileComponent = () => {
   const formatPrice = (price) => {
     return new Intl.NumberFormat("ar-EG").format(price);
   };
+  
 
   if (loading) {
     return (
