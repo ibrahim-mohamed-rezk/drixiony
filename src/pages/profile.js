@@ -41,6 +41,7 @@ const ProfileComponent = () => {
           {},
           {
             "Content-Type": "multipart/form-data",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
           }
         );
         setUserAds(response.data);
@@ -164,65 +165,71 @@ const ProfileComponent = () => {
             ) : userAds.length > 0 ? (
               <div className="ads-grid">
                 {userAds.map((ad) => (
-                  <div key={ad.id} className="ad-card">
+                  <div key={ad?.id} className="ad-card">
                     <div className="ad-image-container">
-                      <img src={ad.image} alt={ad.name} className="ad-image" />
+                      <img
+                        src={ad?.image}
+                        alt={ad?.name}
+                        className="ad-image"
+                      />
                       <div
                         className={`ad-status ${
-                          ad.status === "active" ? "active" : "inactive"
+                          ad?.status === "active" ? "active" : "inactive"
                         }`}
                       >
-                        {ad.status === "active" ? "نشط" : "غير نشط"}
+                        {ad?.status === "active" ? "نشط" : "غير نشط"}
                       </div>
                     </div>
 
                     <div className="ad-content">
                       <h3 className="ad-title">
-                        {ad.model.brand} {ad.model.name}
+                         {ad?.model?.name}
                       </h3>
 
-                      <div className="ad-details">
+                      <div className="ad-details" style={{ flexWrap: "wrap" }}>
                         <div className="ad-detail-item">
+                          <span className="ad-detail-text">
+                            {formatPrice(ad?.price)} جنيه
+                          </span>
                           <DollarSign className="ad-detail-icon" />
-                          <span className="ad-detail-text">
-                            {formatPrice(ad.price)} جنيه
-                          </span>
                         </div>
 
                         <div className="ad-detail-item">
+                          <span className="ad-detail-text">{ad?.year}</span>
                           <Calendar className="ad-detail-icon" />
-                          <span className="ad-detail-text">{ad.year}</span>
                         </div>
 
                         <div className="ad-detail-item">
-                          <Gauge className="ad-detail-icon" />
                           <span className="ad-detail-text">
-                            {formatPrice(ad.km)} كم
+                            {formatPrice(ad?.km)} كم
                           </span>
+                          <Gauge className="ad-detail-icon" />
                         </div>
 
                         <div className="ad-detail-item">
+                          <span className="ad-detail-text">{ad?.fuel}</span>
                           <Fuel className="ad-detail-icon" />
-                          <span className="ad-detail-text">{ad.fuel}</span>
                         </div>
 
                         <div className="ad-detail-item">
+                          <span className="ad-detail-text">{ad?.color}</span>
                           <Palette className="ad-detail-icon" />
-                          <span className="ad-detail-text">{ad.color}</span>
                         </div>
 
                         <div className="ad-detail-item">
+                          <span className="ad-detail-text">
+                            {ad?.city?.name}
+                          </span>
                           <MapPin className="ad-detail-icon" />
-                          <span className="ad-detail-text">{ad.city.name}</span>
                         </div>
                       </div>
 
                       <div className="ad-footer">
                         <div className="ad-images-count">
-                          <Image className="ad-images-icon" />
                           <span className="ad-images-text">
-                            {ad.images.length} صور
+                            {ad?.images?.length} صور
                           </span>
+                          <Image className="ad-images-icon" />
                         </div>
 
                         <div className="ad-actions">
@@ -239,7 +246,7 @@ const ProfileComponent = () => {
                       </div>
 
                       <div className="ad-date">
-                        تم النشر: {formatDate(ad.created_at)}
+                        تم النشر: {formatDate(ad?.created_at)}
                       </div>
                     </div>
                   </div>

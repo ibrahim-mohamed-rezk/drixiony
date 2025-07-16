@@ -406,7 +406,6 @@ header {
 /* Ad details */
 .ad-details {
   display: flex;
-  flex-direction: column;
   gap: 0.5rem;
   margin-bottom: 1rem;
 }
@@ -414,7 +413,9 @@ header {
 .ad-detail-item {
   display: flex;
   align-items: center;
+  justify-content: start;
   gap: 0.5rem;
+  width: 48%;
 }
 
 .ad-detail-icon {
