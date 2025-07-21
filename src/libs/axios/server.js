@@ -9,11 +9,7 @@ const backendServer = axios.create({
 });
 
 // Example of a GET request
-export const getData = async (
-  endpoint,
-  params,
-  headers
-) => {
+export const getData = async (endpoint, params, headers) => {
   try {
     const response = await backendServer.get(endpoint, { params, headers });
     return response.data;
@@ -24,14 +20,23 @@ export const getData = async (
 };
 
 // Example of a POST request
-export const postData = async (
-  endpoint,
-  data,
-  headers
-) => {
+export const postData = async (endpoint, data, headers) => {
   try {
     const response = await backendServer.post(endpoint, data, {
-      headers
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error posting data:", error);
+    throw error;
+  }
+};
+
+// Example of a PUT request
+export const putData = async (endpoint, data, headers) => {
+  try {
+    const response = await backendServer.put(endpoint, data, {
+      headers,
     });
     return response.data;
   } catch (error) {
@@ -41,14 +46,10 @@ export const postData = async (
 };
 
 // Example of a PATCH request
-export const patchData = async (
-  endpoint,
-  data,
-  headers
-) => {
+export const patchData = async (endpoint, data, headers) => {
   try {
     const response = await backendServer.patch(endpoint, data, {
-      headers
+      headers,
     });
     return response.data;
   } catch (error) {

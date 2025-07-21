@@ -472,6 +472,10 @@ header {
 
 .action-btn.view {
   color: #46D993;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
 }
 
 .action-btn.view:hover {

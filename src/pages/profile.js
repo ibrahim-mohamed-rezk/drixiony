@@ -15,10 +15,11 @@ import {
   Palette,
   Settings,
   Image,
+  X,
+  Check,
 } from "lucide-react";
 import MainLayout from "../layout/MainLayout";
-import { getData } from "../libs/axios/server";
-
+import { getData, postData } from "../libs/axios/server";
 
 const ProfileComponent = () => {
   const [user, setUser] = useState(null);
@@ -26,12 +27,20 @@ const ProfileComponent = () => {
   const [loading, setLoading] = useState(true);
   const [adsLoading, setAdsLoading] = useState(true);
 
+  // For editing profile
+  const [editMode, setEditMode] = useState(false);
+  const [editUser, setEditUser] = useState(null);
+  const [updateLoading, setUpdateLoading] = useState(false);
+  const [updateError, setUpdateError] = useState("");
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+
   useEffect(() => {
     setLoading(true);
-    setUser(JSON.parse(localStorage.getItem("user") || "{}"));
+    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    setUser(storedUser);
+    setEditUser(storedUser);
     setLoading(false);
   }, []);
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +50,7 @@ const ProfileComponent = () => {
           {},
           {
             "Content-Type": "multipart/form-data",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           }
         );
         setUserAds(response.data);
@@ -54,7 +63,6 @@ const ProfileComponent = () => {
 
     fetchData();
   }, []);
-    
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("ar-EG", {
@@ -67,7 +75,63 @@ const ProfileComponent = () => {
   const formatPrice = (price) => {
     return new Intl.NumberFormat("ar-EG").format(price);
   };
-  
+
+  // Handle input changes in edit form
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Handle profile update
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    setUpdateLoading(true);
+    setUpdateError("");
+    setUpdateSuccess(false);
+    try {
+      // Only send updatable fields
+      const payload = {
+        name: editUser.name,
+        phone: editUser.phone,
+        email: editUser.email,
+        address: editUser.address,
+      };
+      await postData("profile/update", payload, {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      });
+      // Update local user and localStorage
+      setUser((prev) => ({
+        ...prev,
+        ...payload,
+      }));
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...user,
+          ...payload,
+        })
+      );
+      setUpdateSuccess(true);
+      setEditMode(false);
+    } catch (error) {
+      setUpdateError("حدث خطأ أثناء تحديث البيانات. حاول مرة أخرى.");
+      console.log(error);
+    } finally {
+      setUpdateLoading(false);
+    }
+  };
+
+  // Cancel edit
+  const handleCancelEdit = () => {
+    setEditUser(user);
+    setEditMode(false);
+    setUpdateError("");
+    setUpdateSuccess(false);
+  };
 
   if (loading) {
     return (
@@ -88,64 +152,251 @@ const ProfileComponent = () => {
             <div className="section-header">
               <User className="section-icon" />
               <h2 className="section-title">المعلومات الشخصية</h2>
+              {!editMode && user && (
+                <button
+                  className="edit-profile-btn"
+                  style={{
+                    marginRight: "auto",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    setEditMode(true);
+                    setEditUser(user);
+                    setUpdateError("");
+                    setUpdateSuccess(false);
+                  }}
+                  title="تعديل المعلومات"
+                >
+                  <Edit />
+                </button>
+              )}
             </div>
 
             {user ? (
-              <div className="info-grid">
-                <div className="info-column">
-                  <div className="info-item">
-                    <User className="info-icon" />
-                    <div className="info-content">
-                      <p className="info-label">الاسم</p>
-                      <p className="info-value">{user.name}</p>
+              editMode ? (
+                <div className="edit-profile-form" style={{ marginTop: 16 }}>
+                  <div className="info-grid">
+                    <div className="info-column">
+                      <div className="info-item">
+                        <User className="info-icon" />
+                        <div className="info-content">
+                          <label className="info-label" htmlFor="name">
+                            الاسم
+                          </label>
+                          <input
+                            className="info-input"
+                            id="name"
+                            name="name"
+                            type="text"
+                            value={editUser?.name || ""}
+                            onChange={handleInputChange}
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="info-item">
+                        <Phone className="info-icon" />
+                        <div className="info-content">
+                          <label className="info-label" htmlFor="phone">
+                            رقم الهاتف
+                          </label>
+                          <input
+                            className="info-input"
+                            id="phone"
+                            name="phone"
+                            type="text"
+                            value={editUser?.phone || ""}
+                            onChange={handleInputChange}
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="info-item">
+                        <Mail className="info-icon" />
+                        <div className="info-content">
+                          <label className="info-label" htmlFor="email">
+                            البريد الإلكتروني
+                          </label>
+                          <input
+                            className="info-input"
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={editUser?.email || ""}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="info-column">
+                      <div className="info-item">
+                        <MapPin className="info-icon" />
+                        <div className="info-content">
+                          <label className="info-label" htmlFor="address">
+                            العنوان
+                          </label>
+                          <input
+                            className="info-input"
+                            id="address"
+                            name="address"
+                            type="text"
+                            value={editUser?.address || ""}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="info-item">
+                        <Settings className="info-icon" />
+                        <div className="info-content">
+                          <p className="info-label">نوع المستخدم</p>
+                          <p className="info-value">{user.role}</p>
+                        </div>
+                      </div>
+
+                      <div className="info-item">
+                        <Calendar className="info-icon" />
+                        <div className="info-content">
+                          <p className="info-label">تاريخ التسجيل</p>
+                          <p className="info-value">
+                            {formatDate(user.created_at)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {updateError && (
+                    <div
+                      className="update-error"
+                      style={{ color: "red", marginTop: 8 }}
+                    >
+                      {updateError}
+                    </div>
+                  )}
+                  {updateSuccess && (
+                    <div
+                      className="update-success"
+                      style={{ color: "green", marginTop: 8 }}
+                    >
+                      <Check size={16} style={{ verticalAlign: "middle" }} /> تم
+                      تحديث البيانات بنجاح
+                    </div>
+                  )}
+                  <div
+                    className="edit-profile-actions"
+                    style={{ marginTop: 16, display: "flex", gap: 8 }}
+                  >
+                    <button
+                      onClick={handleUpdateProfile}
+                      className="save-profile-btn"
+                      disabled={updateLoading}
+                      style={{
+                        background: "#4caf50",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: 4,
+                        padding: "8px 16px",
+                        cursor: updateLoading ? "not-allowed" : "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
+                      }}
+                    >
+                      {updateLoading ? (
+                        <span
+                          className="loading-spinner"
+                          style={{ width: 16, height: 16 }}
+                        ></span>
+                      ) : (
+                        <Check size={18} />
+                      )}
+                      حفظ
+                    </button>
+                    <button
+                      type="button"
+                      className="cancel-profile-btn"
+                      onClick={handleCancelEdit}
+                      style={{
+                        background: "#f44336",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: 4,
+                        padding: "8px 16px",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
+                      }}
+                    >
+                      <X size={18} />
+                      إلغاء
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="info-grid">
+                  <div className="info-column">
+                    <div className="info-item">
+                      <User className="info-icon" />
+                      <div className="info-content">
+                        <p className="info-label">الاسم</p>
+                        <p className="info-value">{user.name}</p>
+                      </div>
+                    </div>
+
+                    <div className="info-item">
+                      <Phone className="info-icon" />
+                      <div className="info-content">
+                        <p className="info-label">رقم الهاتف</p>
+                        <p className="info-value">{user.phone}</p>
+                      </div>
+                    </div>
+
+                    <div className="info-item">
+                      <Mail className="info-icon" />
+                      <div className="info-content">
+                        <p className="info-label">البريد الإلكتروني</p>
+                        <p className="info-value">{user.email || "غير محدد"}</p>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="info-item">
-                    <Phone className="info-icon" />
-                    <div className="info-content">
-                      <p className="info-label">رقم الهاتف</p>
-                      <p className="info-value">{user.phone}</p>
+                  <div className="info-column">
+                    <div className="info-item">
+                      <MapPin className="info-icon" />
+                      <div className="info-content">
+                        <p className="info-label">العنوان</p>
+                        <p className="info-value">
+                          {user.address || "غير محدد"}
+                        </p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="info-item">
-                    <Mail className="info-icon" />
-                    <div className="info-content">
-                      <p className="info-label">البريد الإلكتروني</p>
-                      <p className="info-value">{user.email || "غير محدد"}</p>
+                    <div className="info-item">
+                      <Settings className="info-icon" />
+                      <div className="info-content">
+                        <p className="info-label">نوع المستخدم</p>
+                        <p className="info-value">{user.role}</p>
+                      </div>
+                    </div>
+
+                    <div className="info-item">
+                      <Calendar className="info-icon" />
+                      <div className="info-content">
+                        <p className="info-label">تاريخ التسجيل</p>
+                        <p className="info-value">
+                          {formatDate(user.created_at)}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-
-                <div className="info-column">
-                  <div className="info-item">
-                    <MapPin className="info-icon" />
-                    <div className="info-content">
-                      <p className="info-label">العنوان</p>
-                      <p className="info-value">{user.address || "غير محدد"}</p>
-                    </div>
-                  </div>
-
-                  <div className="info-item">
-                    <Settings className="info-icon" />
-                    <div className="info-content">
-                      <p className="info-label">نوع المستخدم</p>
-                      <p className="info-value">{user.role}</p>
-                    </div>
-                  </div>
-
-                  <div className="info-item">
-                    <Calendar className="info-icon" />
-                    <div className="info-content">
-                      <p className="info-label">تاريخ التسجيل</p>
-                      <p className="info-value">
-                        {formatDate(user.created_at)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              )
             ) : (
               <p className="no-data">لا توجد معلومات شخصية متاحة</p>
             )}
@@ -182,9 +433,7 @@ const ProfileComponent = () => {
                     </div>
 
                     <div className="ad-content">
-                      <h3 className="ad-title">
-                         {ad?.model?.name}
-                      </h3>
+                      <h3 className="ad-title">{ad?.model?.name}</h3>
 
                       <div className="ad-details" style={{ flexWrap: "wrap" }}>
                         <div className="ad-detail-item">
@@ -234,6 +483,7 @@ const ProfileComponent = () => {
 
                         <div className="ad-actions">
                           <button className="action-btn view">
+                            <span>{ad?.add_views}</span>
                             <Eye className="action-icon" />
                           </button>
                           <button className="action-btn edit">

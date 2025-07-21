@@ -13,7 +13,7 @@ import HowItWorks from "../components/Home2/HowDoesItWork";
 // import OurTrustedPartner from "../components/Home2/OurTrustedPartners";
 // import CompareCarWtihBrand from "../components/Home2/ComparingCarWithBrand";
 // import Testimonial from "../components/Home2/Testimonial";
-import Blog from "../components/Home2/Blog";
+// import Blog from "../components/Home2/Blog";
 import Modals from "../components/Home1/Modals";
 import { ClientToaster } from "../libs/providers/ClientToaster";
 import { getData } from "../libs/axios/server";
@@ -49,7 +49,7 @@ function HomePage2() {
       {/* <OurTrustedPartner /> */}
       {/* <CompareCarWtihBrand /> */}
       {/* <Testimonial /> */}
-      <Blog data={homeData.blogs} />
+      {/* <Blog data={homeData.blogs} /> */}
       <Footer1 />
       <ClientToaster />
     </>
